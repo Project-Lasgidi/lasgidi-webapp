@@ -1,0 +1,45 @@
+<svg width="1440" height="493" viewBox="0 0 1440 493" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="120" height="120" stroke="#E4E4E4"/>
+<rect y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="720" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="720" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="720" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="120" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="840" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="840" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="120" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="840" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="240" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="960" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="960" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="240" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="960" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="360" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="360" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1080" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1080" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="360" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1080" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="480" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="480" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1200" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1200" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="480" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1200" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="600" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="600" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1320" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1320" y="240" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="600" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect x="1320" y="120" width="120" height="120" stroke="#E4E4E4"/>
+<rect width="1440" height="493" fill="url(#paint0_linear_224_2)"/>
+<defs>
+<linearGradient id="paint0_linear_224_2" x1="720" y1="3.44799e-05" x2="720" y2="493" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.64"/>
+<stop offset="0.928946" stop-color="white"/>
+</linearGradient>
+</defs>
+</svg>
