@@ -1,15 +1,19 @@
 import React from 'react';
-import { Disclosure } from '@headlessui/react';
+import { Disclosure, Switch } from '@headlessui/react';
 import { CaretIcon, CheckedIcon, UncheckedIcon } from '@/components/Icons';
 import classNames from '@/lib/classNames';
 
 interface IFilterMenuItem {
   title: string;
-  subMenus: { title: string; isActive: boolean }[];
+  subMenus: { label: string; checked: boolean }[];
+  onChecked: (checked: boolean, title: string, label: string) => void;
 }
 
-// TODO: Implement this
-const FilterMenuItem = ({ title, subMenus }: IFilterMenuItem) => (
+const FilterMenuItem = ({
+  title,
+  subMenus = [],
+  onChecked,
+}: IFilterMenuItem) => (
   <Disclosure>
     {({ open }) => (
       <>
@@ -18,8 +22,7 @@ const FilterMenuItem = ({ title, subMenus }: IFilterMenuItem) => (
             <p className='text-base font-bold leading-relaxed text-black'>
               {title}
             </p>
-
-            {subMenus?.length && (
+            {subMenus.length && (
               <CaretIcon
                 stroke={'#BEBEBE'}
                 className={classNames(
@@ -31,18 +34,20 @@ const FilterMenuItem = ({ title, subMenus }: IFilterMenuItem) => (
           </div>
         </Disclosure.Button>
         <Disclosure.Panel>
-          {subMenus.length &&
-            subMenus.map((item) => (
-              <div
-                key={item.title}
-                className='mt-2 flex cursor-pointer items-center gap-2 pr-2'
-                onClick={() => {}}
-              >
-                {item.isActive ? <CheckedIcon /> : <UncheckedIcon />}
-
-                <p>{item.title}</p>
+          {subMenus.map(({ checked, label }) => (
+            <Switch.Group key={label}>
+              <div className='mt-2 flex cursor-pointer items-center gap-2 pr-2'>
+                <Switch
+                  checked={checked}
+                  onChange={(checked) => onChecked(checked, title, label)}
+                  className='inline-flex h-5 w-5 rounded border'
+                >
+                  {checked ? <CheckedIcon /> : <UncheckedIcon />}
+                </Switch>
+                <Switch.Label>{label}</Switch.Label>
               </div>
-            ))}
+            </Switch.Group>
+          ))}
         </Disclosure.Panel>
       </>
     )}
