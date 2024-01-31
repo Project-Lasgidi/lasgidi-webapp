@@ -32,3 +32,11 @@
     /* outline: 1px solid red; */
   }
 }
+
+#homepage {
+  .slick-slide {
+    & > div {
+      @apply h-full;
+    }
+  }
+}

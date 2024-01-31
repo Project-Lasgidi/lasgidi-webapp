@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
 import Slider from 'react-slick';
+import { omit } from 'lodash';
 import { ConferenceDescription } from '../ConferenceDescription';
 import { IConference } from '@/types';
-import { CarouselControls } from '../../CarouselControls';
+import { CarouselControls } from '@/components/Carousel';
 import { useCarousel } from '@/hooks/useCarousel';
-import * as _ from 'lodash';
 
 interface IConferenceCardSmall {
   conference: IConference;
@@ -13,7 +13,7 @@ interface IConferenceCardSmall {
 
 export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
   const pictures = conference.pictures;
-  const conferenceItem = _.omit(conference, 'pictures');
+  const conferenceItem = omit(conference, 'pictures');
   const {
     settings,
     sliderRef,

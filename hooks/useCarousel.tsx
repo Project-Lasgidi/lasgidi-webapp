@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import Slider, { Settings } from 'react-slick';
 
-export const useCarousel = () => {
+export const useCarousel = (settings: Omit<Settings, 'afterChange'> = {}) => {
   const sliderRef = useRef<Slider | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const settings: Settings = {
+  const defaultSettings: Settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -17,6 +17,7 @@ export const useCarousel = () => {
     focusOnSelect: true,
     lazyLoad: 'progressive',
     speed: 3000,
+    ...settings,
     afterChange: (index: number) => {
       setCurrentSlide(index);
     },
@@ -32,7 +33,7 @@ export const useCarousel = () => {
   return {
     currentSlide,
     sliderRef,
-    settings,
+    settings: defaultSettings,
     handlePreviousCarousel,
     handleNextCarousel,
   };

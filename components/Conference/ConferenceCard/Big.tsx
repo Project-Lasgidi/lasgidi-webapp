@@ -1,12 +1,12 @@
 'use client';
 import Image from 'next/image';
 import Slider from 'react-slick';
-import Container from '../../Container';
-import { CarouselControls } from '../../CarouselControls';
+import { omit } from 'lodash';
+import Container from '@/components/Container';
+import { CarouselControls } from '@/components/Carousel';
 import { useCarousel } from '@/hooks/useCarousel';
 import { ConferenceDescription } from '../ConferenceDescription';
 import { IConference } from '@/types';
-import * as _ from 'lodash';
 
 interface IConferenceCardBig {
   conference: IConference;
@@ -14,7 +14,7 @@ interface IConferenceCardBig {
 
 export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
   const pictures = conference.pictures;
-  const conferenceItem = _.omit(conference, 'pictures');
+  const conferenceItem = omit(conference, 'pictures');
   const {
     settings,
     sliderRef,
@@ -25,13 +25,13 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
 
   return (
     <>
-      <Container className='relative overflow-x-hidden'>
+      <Container className='relative flex overflow-x-hidden overflow-y-hidden md:h-[550px]'>
         <div className='w-full pb-3 md:w-1/2 md:pb-28'>
           <ConferenceDescription isBig conference={conferenceItem} />
         </div>
-        <div className='hidden pb-6 md:block'>
-          <div className='absolute right-4 top-0 w-full md:w-1/2'>
-            <Slider ref={sliderRef} {...settings}>
+        <div className='hidden h-full md:block'>
+          <div className='absolute right-4 top-0 h-full w-full md:w-1/2'>
+            <Slider ref={sliderRef} {...settings} className='h-[550px]'>
               {pictures.map((picture, idx) => (
                 <Image
                   key={idx}
@@ -44,14 +44,10 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
               ))}
             </Slider>
           </div>
-          <CarouselControls
-            currentSlide={currentSlide}
-            totalSlides={conference.pictures.length}
-            onPrevious={handlePreviousCarousel}
-            onNext={handleNextCarousel}
-          />
         </div>
       </Container>
+
+      {/* Small tablets and bigger screens */}
       <div className='relative bg-white md:hidden'>
         <Slider ref={sliderRef} {...settings}>
           {pictures.map((picture, idx) => (
