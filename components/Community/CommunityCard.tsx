@@ -96,17 +96,17 @@ export const CommunityCard = ({
       </div>
     </div>
 
-    {/* <Link href={visit_url} target="_blank"> */}
-    <p className='text-left text-xl font-medium text-black md:hidden'>
-      Visit Website
-    </p>
-    <div className='hidden aspect-square h-32 w-32 cursor-pointer place-items-center gap-2 rounded-3xl bg-neutral-50 hover:scale-105 md:grid'>
-      <p className='text-center text-xl font-medium text-black'>
-        Visit
-        <br />
-        Website
+    <Link href={visit_url} target='_blank'>
+      <p className='text-left text-xl font-medium text-black md:hidden'>
+        Visit Website
       </p>
-    </div>
-    {/* </Link> */}
+      <div className='hidden aspect-square h-32 w-32 cursor-pointer place-items-center gap-2 rounded-3xl bg-neutral-50 hover:scale-105 md:grid'>
+        <p className='text-center text-xl font-medium text-black'>
+          Visit
+          <br />
+          Website
+        </p>
+      </div>
+    </Link>
   </div>
 );

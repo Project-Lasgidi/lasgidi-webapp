@@ -83,55 +83,49 @@ export const SubmitPopover = () => {
                 leaveTo='opacity-0 translate-y-1'
               >
                 <Popover.Panel
+                  onMouseEnter={() => onMouseEnter(open)}
+                  onMouseLeave={() => onMouseLeave(open)}
                   className={classNames(
                     'absolute left-1/2 top-10 z-10 mt-0 w-screen -translate-x-1/2 transform',
-                    'bg-white lg:max-w-sm'
+                    'bg-white lg:max-w-[330px] lg:rounded-lg lg:shadow-lg',
+                    'overflow-hidden lg:ring-1 lg:ring-black lg:ring-opacity-5'
                   )}
                 >
-                  <div
-                    className={classNames(
-                      'w-fit overflow-hidden lg:rounded-lg lg:shadow-lg',
-                      'lg:ring-1 lg:ring-black lg:ring-opacity-5'
-                    )}
-                    onMouseEnter={() => onMouseEnter(open)}
-                    onMouseLeave={() => onMouseLeave(open)}
-                  >
-                    <div className='relative flex flex-col pb-8 lg:pb-0'>
-                      {proposals.map((item) => (
-                        <Link key={item.name} href={item.href}>
-                          <div className='flex gap-2.5 px-4 py-3'>
-                            <item.icon
-                              aria-hidden='true'
-                              className='flex h-6 w-6 flex-shrink-0 items-center justify-center text-white'
-                            />
-                            <p className='text-base text-black'>{item.name}</p>
-                          </div>
-                        </Link>
-                      ))}
-                      <div
-                        className={classNames(
-                          'flex w-screen items-center justify-between',
-                          'gap-2.5 px-4 py-3 lg:w-full lg:justify-normal'
-                        )}
-                      >
-                        <div className='flex items-center gap-2.5'>
-                          <OpensourceIcon
+                  <div className='relative flex flex-col pb-8 lg:pb-0'>
+                    {proposals.map((item) => (
+                      <Link key={item.name} href={item.href}>
+                        <div className='flex gap-2.5 px-4 py-3'>
+                          <item.icon
                             aria-hidden='true'
-                            className='flex h-6 w-6 flex-shrink-0 opacity-30'
+                            className='flex h-6 w-6 flex-shrink-0 items-center justify-center text-white'
                           />
-                          <span className='text-black/30'>
-                            An Open Source Project
-                          </span>
+                          <p className='text-base text-black'>{item.name}</p>
                         </div>
-                        <span
-                          className={classNames(
-                            'inline-flex w-fit justify-center rounded-3xl px-3 py-1.5',
-                            'bg-[#306998] text-center text-xs font-bold lowercase text-white'
-                          )}
-                        >
-                          coming soon
+                      </Link>
+                    ))}
+                    <div
+                      className={classNames(
+                        'flex w-screen items-center justify-between',
+                        'gap-2.5 px-4 py-3 lg:w-full lg:justify-normal'
+                      )}
+                    >
+                      <div className='flex items-center gap-2.5'>
+                        <OpensourceIcon
+                          aria-hidden='true'
+                          className='flex h-6 w-6 flex-shrink-0 opacity-30'
+                        />
+                        <span className='text-black/30'>
+                          An Open Source Project
                         </span>
                       </div>
+                      <span
+                        className={classNames(
+                          'inline-flex w-fit justify-center rounded-3xl px-3 py-1.5',
+                          'bg-[#306998] text-center text-xs font-bold lowercase text-white'
+                        )}
+                      >
+                        coming soon
+                      </span>
                     </div>
                   </div>
                 </Popover.Panel>
