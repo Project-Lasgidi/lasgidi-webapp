@@ -1,5 +1,6 @@
 'use client';
 import Slider from 'react-slick';
+import { createContext, type MutableRefObject } from 'react';
 import { classNames } from '@/lib';
 import { useCarousel } from '@/hooks';
 import CarouselControls from './Controls.tsx';
@@ -11,6 +12,12 @@ type Props = PropsWithChildren<{
   totalSlides: number;
 }>;
 
+export type ConferencesCarouselContextValue = {
+  parentSliderRef?: MutableRefObject<Slider | null>;
+};
+export const ConferencesCarouselContext =
+  createContext<ConferencesCarouselContextValue>({});
+
 export default function UpcomingConferencesCarousel(props: Props) {
   const {
     settings,
@@ -21,22 +28,30 @@ export default function UpcomingConferencesCarousel(props: Props) {
   } = useCarousel();
 
   return (
-    <div
-      id='upcoming-conferences-carousel'
-      className={classNames('relative', props.className)}
-    >
-      <Slider ref={sliderRef} {...settings}>
-        {props.children}
-      </Slider>
+    <ConferencesCarouselContext.Provider value={{ parentSliderRef: sliderRef }}>
+      <div
+        id='upcoming-conferences-carousel'
+        className={classNames('relative', props.className)}
+      >
+        <Slider ref={sliderRef} {...settings}>
+          {props.children}
+        </Slider>
 
-      <Container className='absolute bottom-6 left-0 right-0 w-[1200px]'>
-        <CarouselControls
-          currentSlide={currentSlide}
-          totalSlides={props.totalSlides}
-          onPrevious={handlePreviousCarousel}
-          onNext={handleNextCarousel}
-        />
-      </Container>
-    </div>
+        <Container
+          id='carousel-controls-container'
+          className={classNames(
+            'static bottom-6 left-0 right-0 w-full md:absolute min-[1215px]:w-[1200px]',
+            'mt-4 flex items-center justify-center md:mt-0 md:block'
+          )}
+        >
+          <CarouselControls
+            currentSlide={currentSlide}
+            totalSlides={props.totalSlides}
+            onPrevious={handlePreviousCarousel}
+            onNext={handleNextCarousel}
+          />
+        </Container>
+      </div>
+    </ConferencesCarouselContext.Provider>
   );
 }

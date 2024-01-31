@@ -27,6 +27,7 @@ export const CustomHead = () => {
     <Head>
       <title>{`Lasgidi - ${pageImage.title}`}</title>
       <meta title='description' content={description} />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <link rel='icon' type='image/png' sizes='32x32' href={pageImage.og} />
 
       <meta name='description' content={description} />

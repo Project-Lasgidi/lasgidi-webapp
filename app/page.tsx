@@ -45,7 +45,7 @@ export default async function Home({ searchParams }: SearchParams) {
           </div>
         </section>
 
-        <section className='bg-neutral-100 pt-4 md:mb-24 md:pt-16'>
+        <section className='pt-4 md:mb-24 md:bg-neutral-100 md:pt-16'>
           <UpcomingConferencesCarousel totalSlides={conferences.length}>
             {conferences.map((conference, idx) => (
               <ConferenceCardBig key={idx} conference={conference} />
