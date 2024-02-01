@@ -1,22 +1,24 @@
 import React from 'react';
-import { CarouselControlIcon } from './Icons';
-import classNames from '@/lib/classNames';
+import { CarouselControlIcon } from '../Icons';
+import { classNames } from '@/lib';
 
 interface ICarouselControls {
+  className?: string;
   currentSlide: number;
   totalSlides: number;
   onNext: () => void;
   onPrevious: () => void;
 }
 
-export const CarouselControls = ({
+export default function CarouselControls({
+  className,
   currentSlide,
   totalSlides,
   onPrevious,
   onNext,
-}: ICarouselControls) => {
+}: ICarouselControls) {
   return (
-    <div className='flex items-center gap-4'>
+    <div className={classNames('flex items-center gap-4', className)}>
       <CarouselControlIcon onClick={onPrevious} />
       <div className='flex items-center gap-2'>
         {[...Array(totalSlides)].map((_, index) => (
@@ -28,9 +30,10 @@ export const CarouselControls = ({
             )}
           >
             <div
-              className={`h-2 w-2 rounded-full ${
+              className={classNames(
+                'h-2 w-2 rounded-full',
                 currentSlide >= index ? 'bg-black' : 'bg-gray-300'
-              }`}
+              )}
             />
           </div>
         ))}
@@ -41,4 +44,4 @@ export const CarouselControls = ({
       />
     </div>
   );
-};
+}
