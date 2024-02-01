@@ -1,6 +1,7 @@
 'use client';
+import { createContext, useRef } from 'react';
+import type { MutableRefObject } from 'react';
 import Slider from 'react-slick';
-import { createContext, type MutableRefObject } from 'react';
 import { classNames } from '@/lib';
 import { useCarousel } from '@/hooks';
 import CarouselControls from './Controls.tsx';
@@ -14,22 +15,44 @@ type Props = PropsWithChildren<{
 
 export type ConferencesCarouselContextValue = {
   parentSliderRef?: MutableRefObject<Slider | null>;
+  carouselRootElementRef?: MutableRefObject<HTMLDivElement | null>;
 };
 export const ConferencesCarouselContext =
   createContext<ConferencesCarouselContextValue>({});
 
 export default function UpcomingConferencesCarousel(props: Props) {
+  const carouselRootElementRef = useRef<HTMLDivElement | null>(null);
   const {
     settings,
     sliderRef,
     currentSlide,
     handleNextCarousel,
     handlePreviousCarousel,
-  } = useCarousel();
+  } = useCarousel({
+    autoplay: false,
+    autoplaySpeed: 0,
+    speed: 500,
+  });
+
+  function triggerManualSlideEvent(direction: 'next' | 'previous') {
+    return () => {
+      const event = new CustomEvent('carousel-manual-slide', {
+        detail: {
+          currentSlide,
+        },
+      });
+      carouselRootElementRef.current?.dispatchEvent(event);
+
+      direction === 'next' ? handleNextCarousel() : handlePreviousCarousel();
+    };
+  }
 
   return (
-    <ConferencesCarouselContext.Provider value={{ parentSliderRef: sliderRef }}>
+    <ConferencesCarouselContext.Provider
+      value={{ parentSliderRef: sliderRef, carouselRootElementRef }}
+    >
       <div
+        ref={carouselRootElementRef}
         id='upcoming-conferences-carousel'
         className={classNames('relative', props.className)}
       >
@@ -47,8 +70,8 @@ export default function UpcomingConferencesCarousel(props: Props) {
           <CarouselControls
             currentSlide={currentSlide}
             totalSlides={props.totalSlides}
-            onPrevious={handlePreviousCarousel}
-            onNext={handleNextCarousel}
+            onPrevious={triggerManualSlideEvent('previous')}
+            onNext={triggerManualSlideEvent('next')}
           />
         </Container>
       </div>

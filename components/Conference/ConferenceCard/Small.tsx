@@ -2,10 +2,10 @@
 import Image from 'next/image';
 import Slider from 'react-slick';
 import { omit } from 'lodash';
-import { ConferenceDescription } from '../ConferenceDescription';
-import { IConference } from '@/types';
 import { CarouselControls } from '@/components/Carousel';
-import { useCarousel } from '@/hooks/useCarousel';
+import { useCarousel } from '@/hooks';
+import { ConferenceDescription } from '../ConferenceDescription';
+import type { IConference } from '@/types';
 
 interface IConferenceCardSmall {
   conference: IConference;

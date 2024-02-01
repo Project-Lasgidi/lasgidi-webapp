@@ -31,9 +31,10 @@ export const useCarousel = (settings: Omit<Settings, 'afterChange'> = {}) => {
   };
 
   return {
-    currentSlide,
     sliderRef,
     settings: defaultSettings,
+    currentSlide,
+    setCurrentSlide,
     handlePreviousCarousel,
     handleNextCarousel,
   };
