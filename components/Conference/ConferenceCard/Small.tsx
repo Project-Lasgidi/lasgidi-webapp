@@ -20,7 +20,7 @@ export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
     currentSlide,
     handleNextCarousel,
     handlePreviousCarousel,
-  } = useCarousel();
+  } = useCarousel({ speed: 500, autoplaySpeed: 5000 });
 
   return (
     <div className='relative flex flex-col gap-4 overflow-x-hidden md:flex-row lg:ml-[10%]'>
@@ -40,6 +40,7 @@ export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
             />
           ))}
         </Slider>
+
         <div className='absolute bottom-4 left-1/2 -translate-x-1/2'>
           <CarouselControls
             currentSlide={currentSlide}
