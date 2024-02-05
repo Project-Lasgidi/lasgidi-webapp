@@ -1,33 +1,26 @@
 'use client';
-import React from 'react';
+import React, { useMemo } from 'react';
 import FilterMenuItem from './FilterMenuItem';
 import { useFilterMenu } from './useFilterMenu';
+import regions from '@/constants/regions';
+import programmingLanguages from '@/constants/programmingLanguages';
+import tools from '@/constants/tools';
 
-const initialCategories = [
-  {
-    title: 'Region',
-    menuItems: [
-      { label: 'Africa', checked: false },
-      { label: 'Europe', checked: false },
-    ],
-  },
-  {
-    title: 'Languages',
-    menuItems: [
-      { label: 'Figma', checked: false },
-      { label: 'VS Code', checked: false },
-    ],
-  },
-  {
-    title: 'Tools',
-    menuItems: [
-      { label: 'Python', checked: false },
-      { label: 'Javascript', checked: false },
-    ],
-  },
-];
+const transformMenuCaterogy = (title: string, data: string[]) => ({
+  title,
+  menuItems: data.map((item) => ({ label: item, checked: false })),
+});
 
 const FilterMenu = () => {
+  const initialCategories = useMemo(
+    () => [
+      transformMenuCaterogy('Region', regions),
+      transformMenuCaterogy('Languages', programmingLanguages),
+      transformMenuCaterogy('Tools', tools),
+    ],
+    []
+  );
+
   const { menuCategories, handleMenuItemCheck } = useFilterMenu({
     initialCategories,
   });
