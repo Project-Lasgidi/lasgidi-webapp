@@ -54,7 +54,7 @@ export default function AboutUS() {
               announced. It’s difficult to keep up. So we created the Project
               Lasgidi to help with that.
             </p>
-            <section className='mb-12 mt-4 grid grid-cols-3 gap-4'>
+            <section className='mb-12 mt-4 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 md:gap-y-4'>
               {team.map((member) => (
                 <Member
                   key={member.name}
