@@ -6,6 +6,24 @@ import NavBar from '@/components/NavBar';
 import Link from 'next/link';
 import { TWITTER_URL } from '@/constants/links';
 
+const team = [
+  {
+    name: 'Hope Adoli 🇬🇭',
+    imgUrl: '/images/about-us/hope-adoli.png',
+    title: 'Design / Lead',
+  },
+  {
+    name: 'Derek Duafa 🇬🇭',
+    imgUrl: '/images/about-us/derek-duafa.png',
+    title: 'Software Engineer',
+  },
+  {
+    name: 'Gyen Abubakar 🇬🇭',
+    imgUrl: '/images/about-us/gyen-abubakar.png',
+    title: 'Software Engineer',
+  },
+];
+
 export default function AboutUS() {
   return (
     <>
@@ -25,27 +43,26 @@ export default function AboutUS() {
               >
                 DjangoCon Africa 2023
               </Link>
+              .
               <span>
-                . The idea was simple: Make it possible for people to find
+                The idea was simple: Make it possible for people to find
                 developer communities to join as well as conferences to attend.
               </span>
             </p>
-            <p>
+            <p className='mt-4'>
               At every developer conference, new communities and initiatives are
               announced. It’s difficult to keep up. So we created the Project
               Lasgidi to help with that.
             </p>
-            <section className='mb-12 mt-2 grid grid-cols-3 gap-4'>
-              <Member
-                name='Hope Adoli 🇬🇭'
-                imgUrl='/images/about-us/hope-adoli.jpg'
-                title=' Design / Lead'
-              />
-              <Member
-                name='Derek Duafa 🇬🇭'
-                imgUrl='/images/about-us/hope-adoli.jpg'
-                title=' Software Engineer'
-              />
+            <section className='mb-12 mt-4 grid grid-cols-3 gap-4'>
+              {team.map((member) => (
+                <Member
+                  key={member.name}
+                  name={member.name}
+                  imgUrl={member.imgUrl}
+                  title={member.title}
+                />
+              ))}
             </section>
             <TechStack />
             <div>
