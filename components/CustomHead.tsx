@@ -5,6 +5,7 @@ import { useDarkMode } from 'usehooks-ts';
 const description = `Project Lasgidi is an Open Source Project built to be the one stop shop for people to find tech communities to join, Open Source Projects to contribute to and upcoming tech conferences to attend.`;
 const keywords =
   'Open Source, tech communities, Open Source Projects, upcoming tech conferences, dev conferences,  developer communities';
+const defaultOGImage = 'https://lasgidi.xyz/images/ogs/index-og-image.png';
 
 export const CustomHead = () => {
   const pathname = usePathname();
@@ -14,11 +15,11 @@ export const CustomHead = () => {
   const path: string = pathname ?? '/';
   const Imgs: Record<string, { og: string; title: string }> = {
     '/': {
-      og: 'images/ogs/index-og-image.png',
+      og: defaultOGImage,
       title: 'Project Lasgidi',
     },
     '/about-us': {
-      og: 'images/ogs/index-og-image.png',
+      og: defaultOGImage,
       title: 'About Us | Project Lasgidi',
     },
   };
