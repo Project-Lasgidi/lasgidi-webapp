@@ -6,6 +6,19 @@ export type PropsWithOptionalChildren<P = unknown> = P & {
   children?: ReactNode;
 };
 
+export interface ISearchParams {
+  q?: string;
+  tools?: string;
+  languages?: string;
+  regions?: string;
+}
+
+export type IQueryParams = {
+  page?: number;
+  pageSize?: number;
+  searchParams?: ISearchParams;
+};
+
 export type ICommunity = {
   id: string;
   title: string;
