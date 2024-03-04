@@ -2,19 +2,19 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { ICommunity, IPagination } from '@/types';
+import { ICommunity, IPagination, ISearchParams } from '@/types';
 import { fetchCommunities } from '@/actions/community';
 import { LoadingIcon } from '@/components/Icons';
 import { CommunityCard } from './CommunityCard';
 
 interface ICommunityList {
-  text?: string;
+  searchParams: ISearchParams;
   initialCommunities: ICommunity[];
   initialPagination: IPagination;
 }
 
 export const CommunityList = ({
-  text,
+  searchParams,
   initialCommunities = [],
   initialPagination,
 }: ICommunityList) => {
@@ -32,7 +32,7 @@ export const CommunityList = ({
     const response = await fetchCommunities({
       page: nextPage,
       pageSize,
-      text: text,
+      searchParams,
     });
     if (response.communities?.length) {
       setPagination(response.pagination);

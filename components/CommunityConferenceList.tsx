@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearBar';
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import FilterMenu from './FilterMenu';
-import { ICommunity, IConference, IPagination } from '@/types';
+import { ICommunity, IConference, IPagination, ISearchParams } from '@/types';
 import classNames from '@/lib/classNames';
 import { CommunityList } from './Community/CommunityList';
 import { ConferenceList } from './Conference/ConferenceList';
@@ -12,7 +12,7 @@ import { FilterIcon } from './Icons';
 import { FilterMenuModal } from './FilterMenu/FilterMenuModal';
 
 interface ICommunityList {
-  text?: string;
+  searchParams: ISearchParams;
   initialCommunities: ICommunity[];
   initialConferencies: IConference[];
   initialPagination: IPagination;
@@ -24,7 +24,7 @@ enum Page {
 }
 
 const CommunityConferenceList = ({
-  text,
+  searchParams,
   initialCommunities,
   initialPagination,
   initialConferencies,
@@ -100,14 +100,14 @@ const CommunityConferenceList = ({
         <ul key={uuid()} role='list' className='flex-1'>
           {isCommunity && (
             <CommunityList
-              text={text}
+              searchParams={searchParams}
               initialCommunities={initialCommunities}
               initialPagination={initialPagination}
             />
           )}
           {isConference && (
             <ConferenceList
-              text={text}
+              searchParams={searchParams}
               initialConferencies={initialConferencies}
               initialPagination={initialPagination}
             />

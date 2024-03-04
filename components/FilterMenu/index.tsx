@@ -14,7 +14,7 @@ const transformMenuCaterogy = (title: string, data: string[]) => ({
 const FilterMenu = () => {
   const initialCategories = useMemo(
     () => [
-      transformMenuCaterogy('Region', regions),
+      transformMenuCaterogy('Regions', regions),
       transformMenuCaterogy('Languages', programmingLanguages),
       transformMenuCaterogy('Tools', tools),
     ],

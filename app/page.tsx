@@ -5,19 +5,17 @@ import conferences from '@/data/conferences';
 import { ConferenceCardBig } from '@/components/Conference/ConferenceCard/Big';
 import NavBar from '@/components/NavBar';
 import UpcomingConferencesCarousel from '@/components/Carousel';
+import { ISearchParams } from '@/types';
 
-type SearchParams = {
-  searchParams?: {
-    q?: string;
-  };
+type Props = {
+  searchParams?: ISearchParams;
 };
 
 export const dynamic = 'force-static';
 
-export default async function Home({ searchParams }: SearchParams) {
-  const query = searchParams?.q || '';
-  const { communities, pagination } = await fetchCommunities({
-    text: query,
+export default async function Home({ searchParams }: Props) {
+  const { communities = [], pagination } = await fetchCommunities({
+    searchParams,
   });
 
   return (
@@ -54,7 +52,7 @@ export default async function Home({ searchParams }: SearchParams) {
         </section>
 
         <CommunityConferenceList
-          text={query}
+          searchParams={searchParams as ISearchParams}
           initialCommunities={communities}
           initialConferencies={conferences}
           initialPagination={pagination}

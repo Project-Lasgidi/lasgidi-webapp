@@ -13,11 +13,7 @@ const SearchBar = ({ searchFor }: { searchFor: string }) => {
 
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set('q', term);
-    } else {
-      params.delete('q');
-    }
+    term ? params.set('q', term) : params.delete('q');
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, DEBOUNCE_TIME);
 
