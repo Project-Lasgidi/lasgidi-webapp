@@ -1020,3 +1020,111 @@ export const GithubSmIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const AddIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <path
+      d='M6 12H18'
+      stroke='black'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M12 18V6'
+      stroke='black'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const DeleteIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    width='18'
+    height='18'
+    viewBox='0 0 18 18'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <rect width='18' height='18' rx='9' fill='white' />
+    <path
+      d='M13.5 5.99219C11.835 5.82719 10.16 5.74219 8.49 5.74219C7.5 5.74219 6.51 5.79219 5.52 5.89219L4.5 5.99219'
+      stroke='#F30000'
+      strokeWidth='1.2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M7.25 5.485L7.36 4.83C7.44 4.355 7.5 4 8.345 4H9.655C10.5 4 10.565 4.375 10.64 4.835L10.75 5.485'
+      stroke='#F30000'
+      strokeWidth='1.2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M12.4242 7.57031L12.0992 12.6053C12.0442 13.3903 11.9992 14.0003 10.6042 14.0003H7.39422C5.99922 14.0003 5.95422 13.3903 5.89922 12.6053L5.57422 7.57031'
+      stroke='#F30000'
+      strokeWidth='1.2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M8.16406 11.25H9.82906'
+      stroke='#F30000'
+      strokeWidth='1.2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M7.75 9.25H10.25'
+      stroke='#F30000'
+      strokeWidth='1.2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
+
+export const LogoPlaceholderIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <path
+      opacity='0.4'
+      d='M22 10.7584C22 10.2884 21.62 9.89844 21.14 9.89844H2.86C2.38 9.89844 2 10.2784 2 10.7584C2 16.6484 6.11 20.7584 12 20.7584C17.89 20.7584 22 16.6384 22 10.7584Z'
+      fill='black'
+    />
+    <path
+      d='M12.4598 15.9022L15.3098 13.0622C15.5998 12.7722 15.5998 12.2922 15.3098 12.0022C15.0198 11.7122 14.5398 11.7122 14.2498 12.0022L12.6898 13.5622V3.99219C12.6898 3.58219 12.3498 3.24219 11.9398 3.24219C11.5298 3.24219 11.1898 3.58219 11.1898 3.99219V13.5622L9.61984 12.0022C9.32984 11.7122 8.84984 11.7122 8.55984 12.0022C8.40984 12.1522 8.33984 12.3422 8.33984 12.5322C8.33984 12.7222 8.40984 12.9122 8.55984 13.0622L11.4098 15.9022C11.6998 16.2022 12.1698 16.2022 12.4598 15.9022Z'
+      fill='black'
+    />
+  </svg>
+);
+
+export const SpinnerIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    width='20'
+    height='20'
+    fill='currentColor'
+    viewBox='0 0 1792 1792'
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <path d='M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z'></path>
+  </svg>
+);

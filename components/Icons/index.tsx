@@ -30,6 +30,10 @@ import {
   MicrophoneIcon,
   OpensourceIcon,
   CaretLgIcon,
+  AddIcon,
+  DeleteIcon,
+  LogoPlaceholderIcon,
+  SpinnerIcon,
 } from './SVGIcons';
 
 export {
@@ -64,4 +68,8 @@ export {
   MicrophoneIcon,
   OpensourceIcon,
   CaretLgIcon,
+  AddIcon,
+  DeleteIcon,
+  LogoPlaceholderIcon,
+  SpinnerIcon,
 };
