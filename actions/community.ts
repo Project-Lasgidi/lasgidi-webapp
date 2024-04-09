@@ -2,8 +2,12 @@ import qs from 'qs';
 
 import { axiosInstance } from './axiosIntance';
 import { transformCommunity } from './transformers';
-import { ICommunity, IPagination, IQueryParams, ISearchParams } from '@/types';
+import { ICommunity, IPagination, IQueryParams } from '@/types';
 import { getSearchParams } from '@/lib';
+import {
+  ISubmitCommunityRequest,
+  ISubmitConferenceRequest,
+} from '@/lib/submitSchema';
 
 export const fetchCommunities = async ({
   page = 1,
@@ -21,6 +25,7 @@ export const fetchCommunities = async ({
   } = getSearchParams(searchParams);
 
   const query: any = {
+    populate: '*',
     filters: {},
     pagination: {
       page,
@@ -57,4 +62,26 @@ export const fetchCommunities = async ({
       pagination: { page, pageSize, pageCount: 1, total: 0 },
     };
   }
+};
+
+export const submitCommunity = async (community: ISubmitCommunityRequest) => {
+  return axiosInstance.post('communities', {
+    data: community,
+  });
+};
+
+export const submitConference = async (
+  conference: ISubmitConferenceRequest
+) => {
+  return axiosInstance.post('conferences', {
+    data: conference,
+  });
+};
+
+export const uploadImages = async (formdata: FormData) => {
+  return axiosInstance.post('upload', formdata, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
