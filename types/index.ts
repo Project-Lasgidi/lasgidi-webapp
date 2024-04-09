@@ -22,6 +22,7 @@ export type IQueryParams = {
 export type ICommunity = {
   id: string;
   title: string;
+  logo: IImageUrl;
   description: string;
   visit_url: string;
   platforms: string[];
@@ -45,4 +46,10 @@ export interface IConference {
   website: string;
   location: string;
   pictures: string[];
+}
+
+export interface IImageUrl {
+  url: string;
+  width: number;
+  height: number;
 }

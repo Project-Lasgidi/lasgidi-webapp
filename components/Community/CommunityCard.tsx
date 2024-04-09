@@ -1,12 +1,8 @@
 import { ReactNode } from 'react';
 import { DjangoIcon, GithubIcon, PythonIcon, WorldWideWebIcon } from '../Icons';
 import Image from 'next/image';
-import {
-  djangonautSpace,
-  blackPython,
-  githubCampus,
-} from '@/constants/communityIcons';
 import Link from 'next/link';
+import { IImageUrl } from '@/types';
 
 const CommunityIcons: Record<string, ReactNode> = {
   python: <PythonIcon />,
@@ -24,31 +20,11 @@ const IcoBadge = ({ name }: { name: string }) => (
 
 interface ICommunityCard {
   title: string;
+  logo: IImageUrl;
   description: string;
   visit_url: string;
   programs: string[];
 }
-
-const getIcons = (title: string) => {
-  let icon = null;
-  switch (title) {
-    case 'djangonautspace': {
-      icon = djangonautSpace;
-      break;
-    }
-    case 'blackpythondevs': {
-      icon = blackPython;
-      break;
-    }
-    case 'githubcampusprogram': {
-      icon = githubCampus;
-      break;
-    }
-    default:
-      icon = blackPython;
-  }
-  return icon;
-};
 
 const NewPill = () => (
   <p className='w-fit rounded-3xl bg-neutral-400 px-2 py-1.5 text-center text-xs font-bold uppercase text-white'>
@@ -58,19 +34,20 @@ const NewPill = () => (
 
 export const CommunityCard = ({
   title,
+  logo,
   description,
   programs,
   visit_url,
 }: ICommunityCard) => (
-  <div className='flex w-full flex-col justify-between gap-6 border-b border-neutral-100 px-4 py-6 md:flex-row lg:w-5/6'>
+  <div className='flex w-full flex-col justify-between gap-6 border-b border-neutral-100 px-4 py-6 md:flex-row'>
     <div className='flex flex-col gap-6 md:flex-row'>
       <div className='flex gap-6'>
         <Image
           className='group aspect-square h-32 w-32 shrink-0 overflow-hidden rounded-2xl object-contain group-hover:opacity-75'
-          src={getIcons(title.toLowerCase().replace(/\s/g, ''))}
+          src={logo.url}
           alt='community icon'
-          width={0}
-          height={0}
+          width={logo.width}
+          height={logo.height}
         />
         <div className='w-1/2 md:hidden'>
           <NewPill />
@@ -89,7 +66,7 @@ export const CommunityCard = ({
           </p>
         </div>
         <div className='flex gap-3'>
-          {programs?.map((program, idx) => (
+          {(programs || []).map((program, idx) => (
             <IcoBadge key={idx} name={program} />
           ))}
         </div>

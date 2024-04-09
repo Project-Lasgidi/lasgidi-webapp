@@ -53,9 +53,10 @@ export const CommunityList = ({
           <p>No communities</p>
         </div>
       )}
-      <div className='flex w-full flex-col items-start md:items-end'>
+      <div className='flex w-full flex-col'>
         {communities.map((community: ICommunity) => (
           <CommunityCard
+            logo={community.logo}
             key={community.id}
             title={community.title}
             description={community.description}
