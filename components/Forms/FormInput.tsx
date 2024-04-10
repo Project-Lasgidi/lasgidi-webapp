@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 type FormInputProps = {
   label: string;
+  subLabel?: string;
   name: string;
   placeholder?: string;
   type?: string;
@@ -11,6 +12,7 @@ type FormInputProps = {
 
 const FormInput: React.FC<FormInputProps> = ({
   label,
+  subLabel,
   name,
   placeholder = '',
   type = 'text',
@@ -22,9 +24,17 @@ const FormInput: React.FC<FormInputProps> = ({
 
   return (
     <div>
-      <label htmlFor={name} className='mb-1.5 block font-bold text-gray-700'>
-        {label}
-      </label>
+      <div className='mb-1.5'>
+        <label htmlFor={name} className='block font-bold text-gray-700'>
+          {label}
+        </label>
+        {subLabel && (
+          <span className='mt-0.5 block leading-4 text-gray-500'>
+            {subLabel}
+          </span>
+        )}
+      </div>
+
       <input
         className={classNames(
           'w-full appearance-none rounded-xl border bg-custom-gray px-3 py-2 leading-tight text-gray-700',

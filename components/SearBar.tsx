@@ -18,7 +18,7 @@ const SearchBar = ({ searchFor }: { searchFor: string }) => {
   }, DEBOUNCE_TIME);
 
   return (
-    <div className='flex h-10 w-96 items-center justify-start gap-1 border-b border-neutral-100 pb-3'>
+    <div className='flex h-10 w-full items-center justify-start gap-1 border-b border-neutral-100 pb-3 md:w-96'>
       <SearchIcon className='pointer-events-none' />
       <input
         className={classNames(

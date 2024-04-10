@@ -34,28 +34,26 @@ export const MobileNav = () => {
 
   return (
     <div className='lg:hidden'>
-      <div className='px-4 pt-4'>
-        <div className='grid grid-cols-3 p-3'>
-          <Link href='/'>
-            <LogoIconLg className='cursor-pointer' aria-hidden='true' />
+      <div className='grid grid-cols-3 p-4'>
+        <Link href='/'>
+          <LogoIconLg className='cursor-pointer' aria-hidden='true' />
+        </Link>
+        <div className='flex items-center justify-center text-sm font-normal text-zinc-600'>
+          v {packageJson.version}
+        </div>
+        <div className='flex items-center justify-end gap-3'>
+          <Link href={GITHUB_URL} target='_blank'>
+            <GithubSmIcon aria-hidden='true' />
           </Link>
-          <div className='flex items-center justify-center text-sm font-normal text-zinc-600'>
-            v {packageJson.version}
-          </div>
-          <div className='flex items-center justify-end gap-3'>
-            <Link href={GITHUB_URL} target='_blank'>
-              <GithubSmIcon aria-hidden='true' />
-            </Link>
-            <Link href={TWITTER_URL} target='_blank'>
-              <TwitterIconSm aria-hidden='true' />
-            </Link>
-            <div className='cursor-pointer'>
-              {isOpen ? (
-                <MenuCloseIcon onClick={handleClose} aria-hidden='true' />
-              ) : (
-                <MenuIcon onClick={() => setIsOpen(true)} aria-hidden='true' />
-              )}
-            </div>
+          <Link href={TWITTER_URL} target='_blank'>
+            <TwitterIconSm aria-hidden='true' />
+          </Link>
+          <div className='cursor-pointer'>
+            {isOpen ? (
+              <MenuCloseIcon onClick={handleClose} aria-hidden='true' />
+            ) : (
+              <MenuIcon onClick={() => setIsOpen(true)} aria-hidden='true' />
+            )}
           </div>
         </div>
       </div>

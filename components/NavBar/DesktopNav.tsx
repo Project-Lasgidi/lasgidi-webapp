@@ -10,8 +10,8 @@ import { SubmitPopover } from './SubmitPopover';
 import classNames from '@/lib/classNames';
 
 export const DesktopNav = () => (
-  <Container className='hidden lg:block'>
-    <div className='flex items-center justify-between pt-4'>
+  <Container className='hidden py-4 lg:block'>
+    <div className='flex items-center justify-between'>
       <div className='text-sm font-normal text-zinc-600'>
         v {packageJson.version}
       </div>
