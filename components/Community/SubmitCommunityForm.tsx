@@ -18,6 +18,7 @@ import regions from '@/constants/regions';
 import tools from '@/constants/tools';
 import programmingLanguages from '@/constants/programmingLanguages';
 import LogoPicker from '../Forms/LogoPicker';
+import { toast } from 'react-toastify';
 
 interface SubmitCommunityFormProps {}
 
@@ -52,10 +53,19 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
 
   const {
     reset,
+    watch,
     formState: { isValid, errors },
     handleSubmit,
   } = methods;
-  const stepOneValid = !errors.fullName && !errors.email;
+
+  const watchedFullName = watch('fullName');
+  const watchedEmail = watch('email');
+
+  const isValidFullName = watchedFullName?.trim().length > 0;
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchedEmail);
+
+  const stepOneValid =
+    isValidFullName && isValidEmail && !errors.fullName && !errors.email;
 
   const resetForm = () => {
     reset();
@@ -74,8 +84,10 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
 
       await submitCommunity({ ...data, logo });
       resetForm();
-    } catch (error) {
-      console.error((error as any)?.data?.error);
+      toast.success('Community submitted successfully');
+    } catch (e) {
+      const errorMsg = (e as any)?.data?.error || 'Error submitting community';
+      toast.error(errorMsg);
     } finally {
       setIsLoading(false);
     }
