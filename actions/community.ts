@@ -66,7 +66,7 @@ export const fetchCommunities = async ({
 
 export const submitCommunity = async (community: ISubmitCommunityRequest) => {
   return axiosInstance.post('communities', {
-    data: community,
+    data: { ...community, publishedAt: null },
   });
 };
 
@@ -74,7 +74,7 @@ export const submitConference = async (
   conference: ISubmitConferenceRequest
 ) => {
   return axiosInstance.post('conferences', {
-    data: conference,
+    data: { ...conference, publishedAt: null },
   });
 };
 

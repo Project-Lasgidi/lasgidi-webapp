@@ -26,7 +26,7 @@ const FormTextArea: React.FC<FormTextAreaProps> = ({
           {label}
         </label>
 
-        <span className='text-[#5C5C5C]'>50 words max</span>
+        <span className='text-gray-500'>50 words max</span>
       </div>
       <textarea
         className={classNames(

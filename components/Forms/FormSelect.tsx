@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 type FormSelectProps = {
   label: string;
+  subLabel?: string;
   name: string;
   placeholder?: string;
   options: { value: string; label: string }[];
@@ -14,6 +15,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   name,
   placeholder = '',
   options,
+  subLabel,
 }) => {
   const {
     register,
@@ -22,9 +24,10 @@ const FormSelect: React.FC<FormSelectProps> = ({
 
   return (
     <div>
-      <label htmlFor={name} className='mb-1.5 block font-bold text-gray-700'>
+      <label htmlFor={name} className='block font-bold leading-5 text-gray-700'>
         {label}
       </label>
+      {subLabel && <span className='leading-7 text-gray-500'>{subLabel}</span>}
       <select
         className={classNames(
           'w-full rounded-xl border bg-custom-gray px-3 py-2 leading-tight text-gray-700',

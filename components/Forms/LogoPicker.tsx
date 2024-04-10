@@ -31,7 +31,7 @@ const LogoPicker = ({ title, onLogoChange }: ILogoPicker) => {
         {logo ? (
           <Image
             src={URL.createObjectURL(logo)}
-            alt='Community logo'
+            alt='Logo'
             height={100}
             width={100}
           />
@@ -52,7 +52,7 @@ const LogoPicker = ({ title, onLogoChange }: ILogoPicker) => {
         ) : (
           <div>
             <p
-              className='cursor-pointer text-sm text-[#5c5c5c]'
+              className='cursor-pointer text-sm text-gray-500'
               onClick={() => conferenceImgRef.current?.click()}
             >
               Tap to upload

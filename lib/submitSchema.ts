@@ -8,7 +8,7 @@ export const submitCommunitySchema = object({
   title: string().min(1, 'Title is required'),
   description: string().min(1, 'Description is required'),
   visit_url: string().min(1, 'Visit URL is required'),
-  region: string().min(1, 'Region is required'),
+  region: string().min(1, 'Location is required'),
   platforms: string(),
   tool: string(),
   language: string(),
@@ -30,9 +30,5 @@ export const submitConferenceSchema = object({
   language: string(),
 });
 
-export type ISubmitCommunityRequest = TypeOf<typeof submitCommunitySchema> & {
-  publishedAt: string | null;
-};
-export type ISubmitConferenceRequest = TypeOf<typeof submitConferenceSchema> & {
-  publishedAt: string | null;
-};
+export type ISubmitCommunityRequest = TypeOf<typeof submitCommunitySchema>;
+export type ISubmitConferenceRequest = TypeOf<typeof submitConferenceSchema>;
