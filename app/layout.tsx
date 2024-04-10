@@ -2,7 +2,6 @@ import './globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { PropsWithChildren } from '@/types';
-import NavBar from '@/components/NavBar';
 import { CustomHead } from '@/components/CustomHead';
 import localFont from 'next/font/local';
 

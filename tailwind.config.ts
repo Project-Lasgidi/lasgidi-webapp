@@ -14,6 +14,9 @@ const config: Config = {
       fontFamily: {
         customFont: ['var(--font-sf-pro-display)'],
       },
+      colors: {
+        'custom-gray': '#fbfbfb',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

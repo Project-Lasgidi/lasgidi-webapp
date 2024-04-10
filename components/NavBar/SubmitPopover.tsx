@@ -12,12 +12,12 @@ import classNames from '@/lib/classNames';
 const proposals = [
   {
     name: 'A Tech Community',
-    href: '#',
+    href: '/submit/community',
     icon: CommunityIcon,
   },
   {
     name: 'A Tech Conference',
-    href: '#',
+    href: '/submit/conference',
     icon: MicrophoneIcon,
   },
 ];

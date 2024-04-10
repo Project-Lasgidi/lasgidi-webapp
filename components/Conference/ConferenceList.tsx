@@ -1,20 +1,20 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { IConference, IPagination } from '@/types';
+import { IConference, IPagination, ISearchParams } from '@/types';
 import { fetchCommunities } from '@/actions/community';
 import { LoadingIcon } from '@/components/Icons';
 import conferences from '@/data/conferences';
 import { ConferenceCardSmall } from './ConferenceCard/Small';
 
 interface IConferenceList {
-  text?: string;
+  searchParams: ISearchParams;
   initialConferencies: IConference[];
   initialPagination: IPagination;
 }
 
 export const ConferenceList = ({
-  text,
+  searchParams,
   initialConferencies = [],
   initialPagination,
 }: IConferenceList) => {
