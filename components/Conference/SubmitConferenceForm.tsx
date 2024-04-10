@@ -5,50 +5,54 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  ISubmitCommunityRequest,
-  submitCommunitySchema,
+  ISubmitConferenceRequest,
+  submitConferenceSchema,
 } from '@/lib/submitSchema';
-import { submitCommunity, uploadImages } from '@/actions/community';
+import { submitConference, uploadImages } from '@/actions/community';
 import FormInput from '@/components/Forms/FormInput';
 import Button from '@/components/Forms/Button';
 import FormTextArea from '@/components/Forms/FormTextArea';
 import FormSelect from '@/components/Forms/FormSelect';
-import { CommunityIcon } from '@/components/Icons';
+import { MicrophoneIcon } from '@/components/Icons';
 import regions from '@/constants/regions';
 import tools from '@/constants/tools';
 import programmingLanguages from '@/constants/programmingLanguages';
 import LogoPicker from '../Forms/LogoPicker';
+import { ImagesPicker } from '../Forms/ImagesPicker';
 import { toast } from 'react-toastify';
 
-interface SubmitCommunityFormProps {}
+interface SubmitConferenceFormProps {}
 
 enum Step {
   Personal = 'personal',
-  Community = 'community',
+  Conference = 'conference',
 }
 
 const defaultValues = {
   fullName: '',
   email: '',
-  communityEmail: '',
+  conferenceEmail: '',
   title: '',
   description: '',
   visit_url: '',
   region: '',
-  platforms: '',
+  platforms: [],
+  pictures: [],
   tool: '',
   language: '',
   logo: 0,
 };
 
-const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
+const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   const [step, setStep] = useState<Step>(Step.Personal);
-  const [communityLogo, setCommunityLogo] = useState<File | null>(null);
+  const [conferenceLogo, setConferenceLogo] = useState<File | null>(null);
+  const [conferenceImages, setConferenceImages] = React.useState<File[]>([]);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const methods = useForm<ISubmitCommunityRequest>({
+  const methods = useForm<ISubmitConferenceRequest>({
     mode: 'onBlur',
-    resolver: zodResolver(submitCommunitySchema),
+    resolver: zodResolver(submitConferenceSchema),
     defaultValues,
   });
 
@@ -71,23 +75,31 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   const resetForm = () => {
     reset();
     setStep(Step.Personal);
-    setCommunityLogo(null);
+    setConferenceLogo(null);
+    setConferenceImages([]);
   };
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
 
-      const formData = new FormData();
-      formData.append('files', communityLogo!);
-      const logoResponse = await uploadImages(formData);
+      const logoFormData = new FormData();
+      logoFormData.append('files', conferenceLogo!);
+      const logoResponse = await uploadImages(logoFormData);
       const logo = logoResponse.data[0].id;
 
-      await submitCommunity({ ...data, logo });
+      const imagesFormData = new FormData();
+      conferenceImages.forEach((file) => {
+        imagesFormData.append('files', file);
+      });
+      const imagesResponse = await uploadImages(imagesFormData);
+      const pictures = imagesResponse.data.map((image: any) => image.id);
+
+      await submitConference({ ...data, logo, pictures });
       resetForm();
-      toast.success('Community submitted successfully');
+      toast.success('Conference submitted successfully');
     } catch (e) {
-      const errorMsg = (e as any)?.data?.error || 'Error submitting community';
+      const errorMsg = (e as any)?.data?.error || 'Error submitting conference';
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);
@@ -100,14 +112,14 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
         {step === Step.Personal && (
           <>
             <div className='flex gap-2'>
-              <CommunityIcon />
-              <h1 className='font-bold'>Submit a community</h1>
+              <MicrophoneIcon />
+              <h1 className='font-bold'>Submit a conference</h1>
             </div>
 
             <div className='mb-6 mt-4 flex flex-col gap-y-2'>
               <p>
                 We are very happy that you are considering sharing your
-                community with us.
+                conference with us.
               </p>
               <p>Please fill the form below and we’ll take it from there.</p>
             </div>
@@ -128,7 +140,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
             <Button
               type='button'
               disabled={!stepOneValid}
-              onClick={() => setStep(Step.Community)}
+              onClick={() => setStep(Step.Conference)}
               className='w-full'
             >
               Next
@@ -136,36 +148,36 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
           </>
         )}
 
-        {step === Step.Community && (
+        {step === Step.Conference && (
           <>
             <div className='mb-10 grid gap-y-6'>
               <LogoPicker
-                title='Community logo'
-                onLogoChange={(logo) => setCommunityLogo(logo)}
+                title='Conference logo'
+                onLogoChange={(logo) => setConferenceLogo(logo)}
               />
               <FormInput
-                label='Community name'
+                label='Conference name'
                 name='title'
-                placeholder='Acme Community'
+                placeholder='Acme Conference'
               />
               <FormInput
-                label='Community email'
-                name='communityEmail'
-                placeholder='hello@community-mail.com'
+                label='Conference email'
+                name='conferenceEmail'
+                placeholder='hello@conference-mail.com'
               />
               <FormInput
-                label='Community website'
+                label='Conference website'
                 name='visit_url'
                 placeholder='https://website.com'
               />
               <FormTextArea
-                label='Community description'
+                label='Conference description'
                 name='description'
-                placeholder='What is this community about'
+                placeholder='What is this conference about'
               />
               <FormSelect
                 label='Language (optional)'
-                subLabel='Which language is your community built around?'
+                subLabel='Which language is your conference built around?'
                 name='language'
                 placeholder='Select a language'
                 options={programmingLanguages.map((language) => ({
@@ -175,7 +187,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
               />
               <FormSelect
                 label='Tool (optional)'
-                subLabel='Which tool is your community built around?'
+                subLabel='Which tool is your conference built around?'
                 name='tool'
                 placeholder='Select a tool'
                 options={tools.map((tool) => ({
@@ -185,7 +197,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
               />
               <FormSelect
                 label='Location'
-                subLabel='Where is your community based?'
+                subLabel='Where is your conference based?'
                 name='region'
                 placeholder='Select a region'
                 options={regions.map((region) => ({
@@ -193,11 +205,19 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
                   value: region,
                 }))}
               />
+              <div>
+                <h1>Conference Images</h1>
+                <ImagesPicker
+                  onImageChange={(conferenceImages) =>
+                    setConferenceImages(conferenceImages)
+                  }
+                />
+              </div>
             </div>
             <Button
               type='submit'
               loading={isLoading}
-              disabled={!isValid || !communityLogo || isLoading}
+              disabled={!isValid || !conferenceLogo || isLoading}
               className='w-full'
             >
               Submit
@@ -209,4 +229,4 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   );
 };
 
-export default SubmitCommunityForm;
+export default SubmitConferenceForm;

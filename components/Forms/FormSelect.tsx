@@ -8,6 +8,7 @@ type FormSelectProps = {
   name: string;
   placeholder?: string;
   options: { value: string; label: string }[];
+  defaultOption?: string;
 };
 
 const FormSelect: React.FC<FormSelectProps> = ({
@@ -16,6 +17,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
   placeholder = '',
   options,
   subLabel,
+  defaultOption = 'Select one',
 }) => {
   const {
     register,
@@ -39,6 +41,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
         aria-invalid={errors[name]?.message ? 'true' : 'false'}
         {...register(name)}
       >
+        <option value='' disabled selected>
+          {defaultOption}
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

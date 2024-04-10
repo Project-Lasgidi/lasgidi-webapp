@@ -1,6 +1,7 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { AddIcon, DeleteIcon } from '@/components/Icons';
+import { classNames } from '@/lib';
 
 interface IImagesPicker {
   totalImages?: number;
@@ -43,7 +44,7 @@ export const ImagesPicker = ({
 
   return (
     <>
-      <label className='text-[#5C5C5C]'>Add up to {totalImages} images</label>
+      <label className='text-gray-500'>Add up to {totalImages} images</label>
       {currentImage ? (
         <Image
           src={URL.createObjectURL(currentImage)}
@@ -53,14 +54,14 @@ export const ImagesPicker = ({
           className='aspect-video h-52 w-full rounded-lg object-cover'
         />
       ) : (
-        <div className='h-52 w-full rounded-xl bg-custom-gray' />
+        <div className='h-52 w-full rounded-xl border bg-custom-gray' />
       )}
-      <div className='mt-2 flex items-center gap-x-2'>
+      <div className='mt-2 flex items-center gap-x-1.5'>
         {selectedImages.length > 0 &&
           selectedImages.map((image, index) => (
             <div className='relative' key={index}>
               <DeleteIcon
-                className='absolute bottom-1 right-2 z-10 h-6 w-6 cursor-pointer rounded-full bg-white p-1'
+                className='absolute bottom-1 right-1 z-10 h-6 w-6 cursor-pointer rounded-full bg-white p-1'
                 onClick={() => removeImage(image)}
               />
               <Image
@@ -69,14 +70,17 @@ export const ImagesPicker = ({
                 layout='fixed'
                 width={100}
                 height={100}
-                className='cursor-pointer rounded-xl'
+                className={classNames(
+                  'h-12 w-[74px] cursor-pointer rounded-xl',
+                  image === currentImage && 'border-[3px] border-red-400'
+                )}
                 onClick={() => setCurrentImage(image)}
               />
             </div>
           ))}
         {selectedImages.length < totalImages && (
           <div
-            className='flex h-14 w-20 cursor-pointer items-center justify-center rounded-xl bg-custom-gray px-6 py-3'
+            className='flex h-12 w-[74px] cursor-pointer items-center justify-center rounded-xl border bg-custom-gray px-6 py-3'
             onClick={() => ref.current?.click()}
           >
             <AddIcon />

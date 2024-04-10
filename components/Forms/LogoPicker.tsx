@@ -27,7 +27,7 @@ const LogoPicker = ({ title, onLogoChange }: ILogoPicker) => {
 
   return (
     <div className='flex items-center gap-4'>
-      <div className='flex h-24 w-24 items-center justify-center rounded-xl bg-custom-gray'>
+      <div className='flex h-24 w-24 items-center justify-center rounded-xl border bg-custom-gray'>
         {logo ? (
           <Image
             src={URL.createObjectURL(logo)}

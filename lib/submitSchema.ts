@@ -5,6 +5,9 @@ export const submitCommunitySchema = object({
   email: string()
     .min(1, { message: 'Email is required.' })
     .email('This is not a valid email.'),
+  communityEmail: string()
+    .min(1, { message: 'Community email is required.' })
+    .email('This is not a valid email.'),
   title: string().min(1, 'Title is required'),
   description: string().min(1, 'Description is required'),
   visit_url: string().min(1, 'Visit URL is required'),
@@ -20,14 +23,18 @@ export const submitConferenceSchema = object({
   email: string()
     .min(1, { message: 'Email is required.' })
     .email('This is not a valid email.'),
+  conferenceEmail: string()
+    .min(1, { message: 'Conference email is required.' })
+    .email('This is not a valid email.'),
   title: string().min(1, 'Title is required'),
   description: string().min(1, 'Description is required'),
   visit_url: string().min(1, 'Visit URL is required'),
   region: string().min(1, 'Region is required'),
-  platforms: string(),
+  platforms: string().array(),
   pictures: number().array(),
   tool: string(),
   language: string(),
+  logo: number(),
 });
 
 export type ISubmitCommunityRequest = TypeOf<typeof submitCommunitySchema>;
