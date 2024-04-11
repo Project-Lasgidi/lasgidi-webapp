@@ -36,10 +36,10 @@ export const DesktopNav = () => (
       </div>
       <div className='flex items-center gap-3'>
         <Link href={GITHUB_URL} target='_blank'>
-          <NavGithubIcon className='rounded-full hover:bg-neutral-100' />
+          <NavGithubIcon className='rounded-full transition duration-500 hover:bg-neutral-100' />
         </Link>
         <Link href={TWITTER_URL} target='_blank'>
-          <TwitterIcon className='rounded-full hover:bg-neutral-100' />
+          <TwitterIcon className='rounded-full transition duration-500 hover:bg-neutral-100' />
         </Link>
       </div>
     </div>

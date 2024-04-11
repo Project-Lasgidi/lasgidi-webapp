@@ -37,7 +37,7 @@ const FormInput: React.FC<FormInputProps> = ({
 
       <input
         className={classNames(
-          'w-full appearance-none rounded-xl border bg-custom-gray px-3 py-2 leading-tight text-gray-700',
+          'h-11 w-full appearance-none rounded-xl border bg-custom-gray px-3 py-2 leading-tight text-gray-700',
           'focus:border-black focus:outline-none',
           'placeholder:text-[#979797]',
           !!errors[name]?.message && 'border-red-500'

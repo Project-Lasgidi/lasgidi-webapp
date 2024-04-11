@@ -43,7 +43,6 @@ const defaultValues = {
 
 const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   const [step, setStep] = useState<Step>(Step.Personal);
-  const [communityLogo, setCommunityLogo] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const methods = useForm<ISubmitCommunityRequest>({
@@ -55,12 +54,15 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   const {
     reset,
     watch,
-    formState: { isValid, errors },
+    setValue,
+    trigger,
+    formState: { errors },
     handleSubmit,
   } = methods;
 
   const watchedFullName = watch('fullName');
   const watchedEmail = watch('email');
+  const communityLogo = watch('logo');
 
   const isValidFullName = watchedFullName?.trim().length > 0;
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchedEmail);
@@ -71,7 +73,6 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   const resetForm = () => {
     reset();
     setStep(Step.Personal);
-    setCommunityLogo(null);
   };
 
   const onSubmit = handleSubmit(async (data) => {
@@ -79,7 +80,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
       setIsLoading(true);
 
       const formData = new FormData();
-      formData.append('files', communityLogo!);
+      formData.append('files', communityLogo as File);
       const logoResponse = await uploadImages(formData);
       const logo = logoResponse.data[0].id;
 
@@ -96,7 +97,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={onSubmit} className='pb-10'>
+      <form onSubmit={onSubmit}>
         {step === Step.Personal && (
           <>
             <div className='flex gap-2'>
@@ -141,7 +142,11 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
             <div className='mb-10 grid gap-y-6'>
               <LogoPicker
                 title='Community logo'
-                onLogoChange={(logo) => setCommunityLogo(logo)}
+                onLogoChange={(logo) => {
+                  setValue('logo', logo || 0);
+                  trigger('logo');
+                }}
+                error={errors['logo']?.message}
               />
               <FormInput
                 label='Community name'
@@ -194,14 +199,20 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
                 }))}
               />
             </div>
-            <Button
-              type='submit'
-              loading={isLoading}
-              disabled={!isValid || !communityLogo || isLoading}
-              className='w-full'
-            >
-              Submit
-            </Button>
+            <div className='flex items-center gap-2'>
+              <Button
+                type='button'
+                variant='secondary'
+                loading={isLoading}
+                className='w-full'
+                onClick={() => setStep(Step.Personal)}
+              >
+                Previous
+              </Button>
+              <Button type='submit' loading={isLoading} className='w-full'>
+                Submit
+              </Button>
+            </div>
           </>
         )}
       </form>

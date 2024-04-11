@@ -1,4 +1,14 @@
-import { number, object, string, TypeOf } from 'zod';
+import {
+  number,
+  object,
+  string,
+  TypeOf,
+  instanceof as instanceof_,
+  union,
+} from 'zod';
+
+const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
+const ACCEPTED_FILE_TYPES = ['image/png'];
 
 export const submitCommunitySchema = object({
   fullName: string().min(1, 'Full name is required'),
@@ -15,7 +25,19 @@ export const submitCommunitySchema = object({
   platforms: string(),
   tool: string(),
   language: string(),
-  logo: number(),
+  logo: union([
+    number().positive('Logo is required').min(1, 'Logo is required'),
+    instanceof_(File)
+      .refine(
+        (file) => file === undefined || file!.size <= MAX_UPLOAD_SIZE,
+        'Logo size must be less than 3MB'
+      )
+      .refine(
+        (file) =>
+          file === undefined || ACCEPTED_FILE_TYPES.includes(file!.type),
+        'Logo must be a PNG'
+      ),
+  ]),
 });
 
 export const submitConferenceSchema = object({
@@ -30,6 +52,9 @@ export const submitConferenceSchema = object({
   description: string().min(1, 'Description is required'),
   visit_url: string().min(1, 'Visit URL is required'),
   region: string().min(1, 'Region is required'),
+  location: string().min(1, 'Location is required'),
+  startDate: string().min(1, 'Start date is required'),
+  endDate: string().min(1, 'End date is required'),
   platforms: string().array(),
   pictures: number().array(),
   tool: string(),

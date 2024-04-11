@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const Banner = () => {
   const router = useRouter();
   return (
-    <section className='flex flex-col items-center gap-6 pb-16 pt-20 md:pb-28 md:pt-24'>
+    <section className='flex flex-col items-center gap-6 bg-hero-image bg-cover bg-no-repeat pb-16 pt-20 md:pb-28 md:pt-24'>
       <div className='flex flex-col items-center  gap-4'>
         <p className='text-center text-6xl font-bold text-black'>
           The Lasgidi Project
