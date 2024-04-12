@@ -97,7 +97,11 @@ const CommunityConferenceList = ({
           <p className='text-xl font-bold text-black'>Filter</p>
           <FilterMenu />
         </div>
-        <ul key={uuid()} role='list' className='flex-1'>
+        <ul
+          key={uuid()}
+          role='list'
+          className='scrollable-div max-h-screen-200 lg:max-h-screen-320 flex-1 overflow-y-auto'
+        >
           {isCommunity && (
             <CommunityList
               searchParams={searchParams}

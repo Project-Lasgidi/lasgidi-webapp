@@ -163,11 +163,11 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
               <div className='mb-10 grid gap-y-6'>
                 <LogoPicker
                   title='Community logo'
+                  error={errors['logo']?.message}
                   onLogoChange={(logo) => {
                     setValue('logo', logo || 0);
                     trigger('logo');
                   }}
-                  error={errors['logo']?.message}
                 />
                 <FormInput
                   label='Community name'
@@ -224,13 +224,17 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
                 <Button
                   type='button'
                   variant='secondary'
-                  loading={isLoading}
                   className='w-full'
                   onClick={() => setStep(Step.Personal)}
                 >
                   Previous
                 </Button>
-                <Button type='submit' loading={isLoading} className='w-full'>
+                <Button
+                  type='submit'
+                  disabled={isLoading}
+                  loading={isLoading}
+                  className='w-full'
+                >
                   Submit
                 </Button>
               </div>

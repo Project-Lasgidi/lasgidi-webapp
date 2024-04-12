@@ -5,11 +5,13 @@ import { classNames } from '@/lib';
 
 interface IImagesPicker {
   totalImages?: number;
+  error?: string;
   onImageChange: (files: File[]) => void;
 }
 
 export const ImagesPicker = ({
   totalImages = 5,
+  error,
   onImageChange,
 }: IImagesPicker) => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -54,7 +56,12 @@ export const ImagesPicker = ({
           className='aspect-video h-52 w-full rounded-lg object-cover'
         />
       ) : (
-        <div className='h-52 w-full rounded-xl border bg-custom-gray' />
+        <div
+          className={classNames(
+            'h-52 w-full rounded-xl border bg-custom-gray',
+            error && 'border-red-500'
+          )}
+        />
       )}
       <div className='mt-2 flex items-center gap-x-1.5'>
         {selectedImages.length > 0 &&
@@ -72,7 +79,7 @@ export const ImagesPicker = ({
                 height={100}
                 className={classNames(
                   'h-12 w-[74px] cursor-pointer rounded-xl',
-                  image === currentImage && 'border-[3px] border-red-400'
+                  image === currentImage && 'border-[3px] border-green-400'
                 )}
                 onClick={() => setCurrentImage(image)}
               />
@@ -95,6 +102,11 @@ export const ImagesPicker = ({
           hidden
         />
       </div>
+      {error && (
+        <span role='alert' className='mt-1 block text-xs italic text-red-500'>
+          {error}
+        </span>
+      )}
     </>
   );
 };

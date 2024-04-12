@@ -21,6 +21,7 @@ import LogoPicker from '../Forms/LogoPicker';
 import { ImagesPicker } from '../Forms/ImagesPicker';
 import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
+import FormDateRangeInput from '../Forms/FormDateRangeInput';
 
 interface SubmitConferenceFormProps {}
 
@@ -30,14 +31,15 @@ enum Step {
 }
 
 const defaultValues = {
-  fullName: '',
-  email: '',
-  conferenceEmail: '',
-  title: '',
+  submitter_name: '',
+  submitter_email: '',
+  name: '',
   description: '',
-  visit_url: '',
+  website: '',
   region: '',
   location: '',
+  start_date: '',
+  end_date: '',
   platforms: [],
   pictures: [],
   tool: '',
@@ -46,10 +48,8 @@ const defaultValues = {
 };
 
 const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
-  const [step, setStep] = useState<Step>(Step.Personal);
-  const [conferenceImages, setConferenceImages] = React.useState<File[]>([]);
+  const [step, setStep] = useState<Step>(Step.Conference);
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCloseSuccessModal = () => {
@@ -70,13 +70,15 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
     watch,
     trigger,
     setValue,
-    formState: { isValid, errors },
+    formState: { errors },
     handleSubmit,
   } = methods;
 
   const watchedFullName = watch('submitter_name');
   const watchedEmail = watch('submitter_email');
   const conferenceLogo = watch('logo');
+  const conferencePictures = watch('pictures');
+  const startDate = watch('start_date');
 
   const isValidFullName = watchedFullName?.trim().length > 0;
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchedEmail);
@@ -90,7 +92,6 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   const resetForm = () => {
     reset();
     setStep(Step.Personal);
-    setConferenceImages([]);
   };
 
   const onSubmit = handleSubmit(async (data) => {
@@ -102,11 +103,11 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
       const logoResponse = await uploadImages(logoFormData);
       const logo = logoResponse.data[0].id;
 
-      const imagesFormData = new FormData();
-      conferenceImages.forEach((file) => {
-        imagesFormData.append('files', file);
+      const picturesFormData = new FormData();
+      conferencePictures.forEach((file) => {
+        picturesFormData.append('files', file as File);
       });
-      const imagesResponse = await uploadImages(imagesFormData);
+      const imagesResponse = await uploadImages(picturesFormData);
       const pictures = imagesResponse.data.map((image: any) => image.id);
 
       await submitConference({ ...data, logo, pictures });
@@ -176,6 +177,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
               <div className='mb-10 grid gap-y-6'>
                 <LogoPicker
                   title='Conference logo'
+                  error={errors['logo']?.message}
                   onLogoChange={(logo) => {
                     setValue('logo', logo || 0);
                     trigger('logo');
@@ -183,17 +185,12 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                 />
                 <FormInput
                   label='Conference name'
-                  name='title'
+                  name='name'
                   placeholder='Acme Conference'
                 />
                 <FormInput
-                  label='Conference email'
-                  name='conferenceEmail'
-                  placeholder='hello@conference-mail.com'
-                />
-                <FormInput
                   label='Conference website'
-                  name='visit_url'
+                  name='website'
                   placeholder='https://website.com'
                 />
                 <FormTextArea
@@ -221,6 +218,18 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                     value: tool,
                   }))}
                 />
+                <FormDateRangeInput
+                  label='Conference date'
+                  subLabel='When will your conference take place?'
+                  startName='start_date'
+                  endName='end_date'
+                  minStartDate={new Date().toISOString().split('T')[0]}
+                  minEndDate={
+                    startDate
+                      ? new Date(startDate).toISOString().split('T')[0]
+                      : ''
+                  }
+                />
                 <FormSelect
                   label='Region'
                   subLabel='Where is your conference based?'
@@ -237,13 +246,14 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                   name='location'
                   placeholder='Eg: Accra, Ghana'
                 />
-
                 <div>
                   <h1>Conference Images</h1>
                   <ImagesPicker
-                    onImageChange={(conferenceImages) =>
-                      setConferenceImages(conferenceImages)
-                    }
+                    error={errors['pictures']?.message}
+                    onImageChange={(pictures) => {
+                      setValue('pictures', pictures);
+                      trigger('pictures');
+                    }}
                   />
                 </div>
               </div>
@@ -251,13 +261,17 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                 <Button
                   type='button'
                   variant='secondary'
-                  loading={isLoading}
                   className='w-full'
                   onClick={() => setStep(Step.Personal)}
                 >
                   Previous
                 </Button>
-                <Button type='submit' loading={isLoading} className='w-full'>
+                <Button
+                  type='submit'
+                  disabled={isLoading}
+                  loading={isLoading}
+                  className='w-full'
+                >
                   Submit
                 </Button>
               </div>

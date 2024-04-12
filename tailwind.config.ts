@@ -17,6 +17,10 @@ const config: Config = {
       colors: {
         'custom-gray': '#fbfbfb',
       },
+      maxHeight: {
+        'screen-320': 'calc(100vh - 320px)',
+        'screen-200': 'calc(100vh - 280px)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

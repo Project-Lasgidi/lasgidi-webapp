@@ -5,6 +5,7 @@ import { SubmitOptionsModal } from './SubmitOptionsModal';
 import { useToggle } from 'usehooks-ts';
 import Button from './Forms/Button';
 import { useSubmitButton } from '@/hooks/useSubmitButton';
+import Link from 'next/link';
 
 const Banner = () => {
   const { handleSubmitMouseEnter, handleSubmitMouseLeave, submitStroke } =
@@ -44,7 +45,9 @@ const Banner = () => {
           </Button>
           <p className='text-base font-normal text-black'>
             <span>Or </span>
-            <span className='underline'>Browse</span>
+            <Link href='/#browse' className='underline'>
+              Browse
+            </Link>
           </p>
         </div>
       </section>
