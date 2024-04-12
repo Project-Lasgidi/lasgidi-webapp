@@ -28,7 +28,7 @@ export default function AboutUS() {
   return (
     <>
       <NavBar />
-      <Container className='relative bg-white pb-4 pt-8 md:pb-20 md:pt-32'>
+      <Container className='relative bg-white pb-4 pt-24 md:pb-20 md:pt-32'>
         <div className='flex flex-wrap justify-center gap-6'>
           <p className='min-w-fit flex-1 shrink-0 text-left text-5xl font-bold text-black md:text-center lg:text-left'>
             About us
