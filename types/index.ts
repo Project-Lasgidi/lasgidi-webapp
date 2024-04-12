@@ -21,10 +21,10 @@ export type IQueryParams = {
 
 export type ICommunity = {
   id: string;
-  title: string;
+  name: string;
   logo: IImageUrl;
   description: string;
-  visit_url: string;
+  website: string;
   platforms: string[];
 };
 

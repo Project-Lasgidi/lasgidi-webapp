@@ -19,10 +19,10 @@ const IcoBadge = ({ name }: { name: string }) => (
 );
 
 interface ICommunityCard {
-  title: string;
+  name: string;
   logo: IImageUrl;
   description: string;
-  visit_url: string;
+  website: string;
   programs: string[];
 }
 
@@ -33,11 +33,11 @@ const NewPill = () => (
 );
 
 export const CommunityCard = ({
-  title,
+  name,
   logo,
   description,
   programs,
-  visit_url,
+  website,
 }: ICommunityCard) => (
   <div className='flex w-full flex-col justify-between gap-6 border-b border-neutral-100 px-4 py-6 md:flex-row'>
     <div className='flex flex-col gap-6 md:flex-row'>
@@ -51,14 +51,14 @@ export const CommunityCard = ({
         />
         <div className='w-1/2 md:hidden'>
           <NewPill />
-          <p className='mt-2 text-2xl font-bold text-black'>{title}</p>
+          <p className='mt-2 text-2xl font-bold text-black'>{name}</p>
         </div>
       </div>
 
       <div className='flex flex-col gap-3'>
         <div className='flex flex-col gap-1'>
           <div className='hidden items-center gap-2 md:flex'>
-            <p className='truncate text-2xl font-bold text-black'>{title}</p>
+            <p className='truncate text-2xl font-bold text-black'>{name}</p>
             <NewPill />
           </div>
           <p className='w-full text-base font-normal leading-relaxed text-zinc-600 md:max-w-lg'>
@@ -73,7 +73,7 @@ export const CommunityCard = ({
       </div>
     </div>
 
-    <Link href={visit_url} target='_blank'>
+    <Link href={website} target='_blank'>
       <p className='text-left text-xl font-medium text-black md:hidden'>
         Visit Website
       </p>

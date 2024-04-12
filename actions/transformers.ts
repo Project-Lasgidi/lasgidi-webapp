@@ -5,14 +5,14 @@ export const transformCommunity = (item: any): ICommunity => {
   const logoItem = item.attributes.logo.data.attributes;
   return {
     id: item.id,
-    title: community.title,
+    name: community.name,
     logo: {
       url: logoItem.url,
       width: logoItem.width,
       height: logoItem.height,
     },
     description: community.description,
-    visit_url: community.visit_url,
+    website: community.website,
     platforms: community.platforms,
   };
 };

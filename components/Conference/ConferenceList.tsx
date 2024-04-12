@@ -2,73 +2,72 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { IConference, IPagination, ISearchParams } from '@/types';
-import { fetchCommunities } from '@/actions/community';
+import { fetchConferences } from '@/actions/conference';
 import { LoadingIcon } from '@/components/Icons';
-import conferences from '@/data/conferences';
 import { ConferenceCardSmall } from './ConferenceCard/Small';
 
 interface IConferenceList {
   searchParams: ISearchParams;
-  initialConferencies: IConference[];
+  initialConferences: IConference[];
   initialPagination: IPagination;
 }
 
 export const ConferenceList = ({
   searchParams,
-  initialConferencies = [],
+  initialConferences = [],
   initialPagination,
 }: IConferenceList) => {
-  const [communities, setCommunities] =
-    useState<IConference[]>(initialConferencies);
-  // const [pagination, setPagination] = useState<IPagination>(initialPagination);
-  // const [ref, inView] = useInView();
+  const [conferencies, setConferences] =
+    useState<IConference[]>(initialConferences);
+  const [pagination, setPagination] = useState<IPagination>(initialPagination);
+  const [ref, inView] = useInView();
 
-  // const { page, pageSize, total } = pagination;
-  // const hasMore = page * pageSize < total;
+  const { page, pageSize, total } = pagination;
+  const hasMore = page * pageSize < total;
 
-  // const loadMoreCommunities = useCallback(async () => {
-  //   if (!hasMore) return;
-  //   const nextPage = page + 1;
-  //   const response = await fetchCommunities({
-  //     page: nextPage,
-  //     pageSize,
-  //     text: text,
-  //   });
-  //   if (response.communities?.length) {
-  //     setPagination(response.pagination);
-  //     setCommunities((prev) => [...prev, ...response.communities]);
-  //   }
-  // }, []);
+  const loadMoreConferences = useCallback(async () => {
+    if (!hasMore) return;
+    const nextPage = page + 1;
+    const response = await fetchConferences({
+      page: nextPage,
+      pageSize,
+      searchParams,
+    });
+    if (response.conferences?.length) {
+      setPagination(response.pagination);
+      setConferences((prev) => [...prev, ...response.conferences]);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     loadMoreCommunities();
-  //   }
-  // }, [inView, loadMoreCommunities]);
+  useEffect(() => {
+    if (inView) {
+      loadMoreConferences();
+    }
+  }, [inView, loadMoreConferences]);
 
   return (
     <>
       <div className='flex w-full flex-col gap-4'>
-        {/* {!communities.length && (
-          <div className="w-full flex items-center justify-center">
-            <div className="w-96"/>
-            <p>No communities</p>
+        {!conferencies.length && (
+          <div className='flex w-full items-center justify-center'>
+            <div className='w-96' />
+            <p>No conferencies</p>
           </div>
-        )} */}
+        )}
 
-        {communities.map((conference: IConference) => (
+        {conferencies.map((conference: IConference) => (
           <ConferenceCardSmall key={conference.id} conference={conference} />
         ))}
 
-        {/* {hasMore && (
+        {hasMore && (
           <div
             ref={ref}
-            className="w-full flex items-center justify-center gap-2 mt-12"
+            className='mt-12 flex w-full items-center justify-center gap-2'
           >
-            <LoadingIcon aria-hidden="true" className="h-6 w-6 animate-spin" />
+            <LoadingIcon aria-hidden='true' className='h-6 w-6 animate-spin' />
             <span>Loading more...</span>
           </div>
-        )} */}
+        )}
       </div>
     </>
   );

@@ -14,7 +14,7 @@ import { FilterMenuModal } from './FilterMenu/FilterMenuModal';
 interface ICommunityList {
   searchParams: ISearchParams;
   initialCommunities: ICommunity[];
-  initialConferencies: IConference[];
+  initialConferences: IConference[];
   initialPagination: IPagination;
 }
 
@@ -32,7 +32,7 @@ const CommunityConferenceList = ({
   searchParams,
   initialCommunities,
   initialPagination,
-  initialConferencies,
+  initialConferences,
 }: ICommunityList) => {
   const [active, setActive] = useState<Page>(Page.COMMUNITY);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,12 +56,12 @@ const CommunityConferenceList = ({
               {tabs.map((tab) => (
                 <p
                   key={tab.id}
+                  onClick={() => setActive(tab.id)}
                   className={classNames(
                     'cursor-pointer rounded-2xl px-2 py-1 font-normal leading-relaxed text-zinc-600 transition-all duration-200',
                     active === tab.id &&
                       'rounded-2xl bg-white px-3 !font-bold text-black'
                   )}
-                  onClick={() => setActive(tab.id)}
                 >
                   {tab.label}
                 </p>
@@ -95,7 +95,7 @@ const CommunityConferenceList = ({
           {active === Page.CONFERENCE && (
             <ConferenceList
               searchParams={searchParams}
-              initialConferencies={initialConferencies}
+              initialConferences={initialConferences}
               initialPagination={initialPagination}
             />
           )}

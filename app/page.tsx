@@ -36,7 +36,7 @@ export default async function Home({ searchParams }: Props) {
       <CommunityConferenceList
         searchParams={searchParams as ISearchParams}
         initialCommunities={communities}
-        initialConferencies={conferences}
+        initialConferences={conferences}
         initialPagination={pagination}
       />
     </div>

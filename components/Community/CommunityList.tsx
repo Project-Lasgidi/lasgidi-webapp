@@ -58,10 +58,10 @@ export const CommunityList = ({
           <CommunityCard
             logo={community.logo}
             key={community.id}
-            title={community.title}
+            name={community.name}
             description={community.description}
             programs={community.platforms}
-            visit_url={community.visit_url}
+            website={community.website}
           />
         ))}
         {hasMore && (
