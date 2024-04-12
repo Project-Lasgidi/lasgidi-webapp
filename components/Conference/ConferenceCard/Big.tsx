@@ -59,7 +59,7 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
     return clearCarouselInterval;
   }, [
     conference.pictures,
-    conferenceItem.title,
+    conferenceItem.name,
     currentSlide,
     entry?.isIntersecting,
     parentSliderRef,
@@ -103,10 +103,10 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
               <Image
                 key={idx}
                 className='h-72 w-full object-cover md:h-[550px] md:rounded-t-2xl'
-                src={picture}
+                src={picture.url}
                 alt='Carousel'
-                width={0}
-                height={0}
+                width={picture.width}
+                height={picture.height}
               />
             ))}
           </Slider>

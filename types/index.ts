@@ -26,7 +26,6 @@ export type ICommunity = {
   description: string;
   visit_url: string;
   platforms: string[];
-  is_approved: boolean;
 };
 
 export type IPagination = {
@@ -38,14 +37,20 @@ export type IPagination = {
 
 export interface IConference {
   id: number;
-  title: string;
+  submitter_name: string;
+  submitter_email: string;
+  name: string;
   description: string;
-  date: string;
-  organization: string;
-  logo: string;
   website: string;
+  region: string;
   location: string;
-  pictures: string[];
+  start_date: string;
+  end_date: string;
+  platforms?: string[];
+  pictures: IImageUrl[];
+  tool?: string;
+  language?: string;
+  logo: IImageUrl;
 }
 
 export interface IImageUrl {

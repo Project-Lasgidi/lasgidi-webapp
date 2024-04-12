@@ -23,6 +23,11 @@ enum Page {
   CONFERENCE = 'conference',
 }
 
+const tabs = [
+  { id: Page.COMMUNITY, label: 'Communities' },
+  { id: Page.CONFERENCE, label: 'Conferences' },
+];
+
 const CommunityConferenceList = ({
   searchParams,
   initialCommunities,
@@ -32,19 +37,8 @@ const CommunityConferenceList = ({
   const [active, setActive] = useState<Page>(Page.COMMUNITY);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const activeStyle = 'bg-white px-3 text-black !font-bold rounded-2xl';
-  const inActiveStyle =
-    'text-base font-normal leading-relaxed text-zinc-600 cursor-pointer rounded-2xl py-1 px-2';
-
-  const isConference = active === Page.CONFERENCE;
-  const isCommunity = active === Page.COMMUNITY;
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   return (
     <>
@@ -59,30 +53,20 @@ const CommunityConferenceList = ({
         <div className='flex flex-col justify-between gap-8 md:flex-row'>
           <div className='flex items-center justify-between'>
             <div className='flex w-fit items-center gap-4 rounded-3xl bg-neutral-100 p-2'>
-              <p
-                className={classNames(
-                  inActiveStyle,
-                  isCommunity && activeStyle
-                )}
-                onClick={() => {
-                  setActive(Page.COMMUNITY);
-                }}
-              >
-                Communities
-              </p>
-              <p
-                className={classNames(
-                  inActiveStyle,
-                  isConference && activeStyle
-                )}
-                onClick={() => {
-                  setActive(Page.CONFERENCE);
-                }}
-              >
-                Conferences
-              </p>
+              {tabs.map((tab) => (
+                <p
+                  key={tab.id}
+                  className={classNames(
+                    'cursor-pointer rounded-2xl px-2 py-1 font-normal leading-relaxed text-zinc-600 transition-all duration-200',
+                    active === tab.id &&
+                      'rounded-2xl bg-white px-3 !font-bold text-black'
+                  )}
+                  onClick={() => setActive(tab.id)}
+                >
+                  {tab.label}
+                </p>
+              ))}
             </div>
-
             <FilterIcon
               className='cursor-pointer lg:hidden'
               onClick={handleOpen}
@@ -91,9 +75,8 @@ const CommunityConferenceList = ({
           <SearchBar searchFor='community' />
         </div>
       </Container>
-
       <div className='mx-auto flex max-w-[1200px] flex-col md:mt-14 md:flex-row'>
-        <div className='hidden w-1/4 pl-4 lg:block xl:pl-0'>
+        <div className='scrollable-div max-h-screen-200 lg:max-h-screen-320 hidden w-1/4 overflow-y-auto overflow-x-hidden pl-4 lg:block xl:pl-0'>
           <p className='text-xl font-bold text-black'>Filter</p>
           <FilterMenu />
         </div>
@@ -102,14 +85,14 @@ const CommunityConferenceList = ({
           role='list'
           className='scrollable-div max-h-screen-200 lg:max-h-screen-320 flex-1 overflow-y-auto'
         >
-          {isCommunity && (
+          {active === Page.COMMUNITY && (
             <CommunityList
               searchParams={searchParams}
               initialCommunities={initialCommunities}
               initialPagination={initialPagination}
             />
           )}
-          {isConference && (
+          {active === Page.CONFERENCE && (
             <ConferenceList
               searchParams={searchParams}
               initialConferencies={initialConferencies}

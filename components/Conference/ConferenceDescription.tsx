@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { IConference } from '@/types';
 import Link from 'next/link';
 import classNames from '@/lib/classNames';
+import { formatDateRange } from '@/lib/formatDateRange';
 
 export interface IConferenceDescription {
   isBig?: boolean;
@@ -14,7 +15,7 @@ export const ConferenceDescription = ({
   isBig = false,
   conference,
 }: IConferenceDescription) => {
-  const { title, description, date, organization, logo, website, location } =
+  const { name, description, start_date, end_date, logo, website, location } =
     conference;
 
   return (
@@ -30,7 +31,7 @@ export const ConferenceDescription = ({
           isBig ? 'mb-6 w-96 text-5xl' : 'text-2xl leading-6'
         )}
       >
-        {title}
+        {name}
       </p>
       <p
         className={classNames(
@@ -42,7 +43,9 @@ export const ConferenceDescription = ({
       </p>
       <div className='flex items-center justify-start gap-2'>
         <CalendarIcon />
-        <p className={`normal-text ${!isBig && 'text-gray-600'}`}>{date}</p>
+        <p className={`normal-text ${!isBig && 'text-gray-600'}`}>
+          {formatDateRange(start_date, end_date)}
+        </p>
       </div>
 
       <div className='flex items-center justify-start gap-2'>
@@ -53,13 +56,13 @@ export const ConferenceDescription = ({
       <div className='mt-6 flex gap-4'>
         <Image
           className='h-10 w-10 rounded-3xl'
-          src={logo}
+          src={logo.url}
           alt='conference logo'
-          width={0}
-          height={0}
+          width={logo.width}
+          height={logo.height}
         />
         <div className='flex flex-col items-start justify-start'>
-          <div className='text-xl font-bold text-black'>{organization}</div>
+          {/* <div className='text-xl font-bold text-black'>{organization}</div> */}
           <div className='flex items-center justify-start gap-1'>
             <Link href={website} target='_blank'>
               <div className='flex items-center gap-1'>

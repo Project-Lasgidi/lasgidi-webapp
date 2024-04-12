@@ -1,17 +1,17 @@
 import qs from 'qs';
 
 import { axiosInstance } from './axiosIntance';
-import { transformCommunity } from './transformers';
-import { ICommunity, IPagination, IQueryParams } from '@/types';
+import { transformConference } from './transformers';
+import { IConference, IPagination, IQueryParams } from '@/types';
 import { getSearchParams } from '@/lib';
-import { ISubmitCommunityRequest } from '@/lib/submitSchema';
+import { ISubmitConferenceRequest } from '@/lib/submitSchema';
 
-export const fetchCommunities = async ({
+export const fetchConferences = async ({
   page = 1,
   pageSize = 2,
   searchParams = {},
 }: IQueryParams): Promise<{
-  communities: ICommunity[];
+  conferences: IConference[];
   pagination: IPagination;
 }> => {
   const {
@@ -49,28 +49,22 @@ export const fetchCommunities = async ({
   }
   const queryStr = qs.stringify(query, { encodeValuesOnly: true });
   try {
-    const res = await axiosInstance.get(`communities?${queryStr}`);
-    const communities = res.data.data.map(transformCommunity);
+    const res = await axiosInstance.get(`conferences?${queryStr}`);
+    const conferences = res.data.data.map(transformConference);
     const pagination = res.data.meta.pagination;
-    return { communities, pagination };
+    return { conferences, pagination };
   } catch (error) {
     return {
-      communities: [],
+      conferences: [],
       pagination: { page, pageSize, pageCount: 1, total: 0 },
     };
   }
 };
 
-export const submitCommunity = async (community: ISubmitCommunityRequest) => {
-  return axiosInstance.post('communities', {
-    data: { ...community, publishedAt: null },
-  });
-};
-
-export const uploadImages = async (formdata: FormData) => {
-  return axiosInstance.post('upload', formdata, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+export const submitConference = async (
+  conference: ISubmitConferenceRequest
+) => {
+  return axiosInstance.post('conferences', {
+    data: { ...conference, publishedAt: null },
   });
 };

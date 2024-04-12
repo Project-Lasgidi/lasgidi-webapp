@@ -8,7 +8,8 @@ import {
   ISubmitConferenceRequest,
   submitConferenceSchema,
 } from '@/lib/submitSchema';
-import { submitConference, uploadImages } from '@/actions/community';
+import { uploadImages } from '@/actions/community';
+import { submitConference } from '@/actions/conference';
 import FormInput from '@/components/Forms/FormInput';
 import Button from '@/components/Forms/Button';
 import FormTextArea from '@/components/Forms/FormTextArea';

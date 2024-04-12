@@ -33,10 +33,10 @@ export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
             <Image
               key={idx}
               className='relative aspect-square h-[300px] w-full object-cover md:rounded-2xl'
-              src={picture}
-              alt='Conference'
-              width={0}
-              height={0}
+              src={picture.url}
+              alt='Conference picture'
+              width={picture.width}
+              height={picture.height}
             />
           ))}
         </Slider>
