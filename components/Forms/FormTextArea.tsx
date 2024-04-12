@@ -32,7 +32,7 @@ const FormTextArea: React.FC<FormTextAreaProps> = ({
         className={classNames(
           'h-40 w-full appearance-none rounded-xl border bg-custom-gray px-3 py-2 leading-tight text-gray-700',
           'focus:border-black focus:outline-none',
-          'placeholder:text-[#979797]',
+          'placeholder:text-neutral-400',
           !!errors[name]?.message && 'border-red-500'
         )}
         placeholder={placeholder}
