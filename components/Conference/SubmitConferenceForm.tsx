@@ -20,6 +20,7 @@ import programmingLanguages from '@/constants/programmingLanguages';
 import LogoPicker from '../Forms/LogoPicker';
 import { ImagesPicker } from '../Forms/ImagesPicker';
 import { toast } from 'react-toastify';
+import { SubmitSuccessModal } from '../SubmitSuccessModal';
 
 interface SubmitConferenceFormProps {}
 
@@ -36,6 +37,7 @@ const defaultValues = {
   description: '',
   visit_url: '',
   region: '',
+  location: '',
   platforms: [],
   pictures: [],
   tool: '',
@@ -45,10 +47,17 @@ const defaultValues = {
 
 const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   const [step, setStep] = useState<Step>(Step.Personal);
-  const [conferenceLogo, setConferenceLogo] = useState<File | null>(null);
   const [conferenceImages, setConferenceImages] = React.useState<File[]>([]);
+  const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleCloseSuccessModal = () => {
+    setOpenSuccessModal(false);
+  };
+  const handleOpenSuccessModal = () => {
+    setOpenSuccessModal(true);
+  };
 
   const methods = useForm<ISubmitConferenceRequest>({
     mode: 'onBlur',
@@ -59,23 +68,28 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   const {
     reset,
     watch,
+    trigger,
+    setValue,
     formState: { isValid, errors },
     handleSubmit,
   } = methods;
 
-  const watchedFullName = watch('fullName');
-  const watchedEmail = watch('email');
+  const watchedFullName = watch('submitter_name');
+  const watchedEmail = watch('submitter_email');
+  const conferenceLogo = watch('logo');
 
   const isValidFullName = watchedFullName?.trim().length > 0;
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchedEmail);
 
   const stepOneValid =
-    isValidFullName && isValidEmail && !errors.fullName && !errors.email;
+    isValidFullName &&
+    isValidEmail &&
+    !errors.submitter_name &&
+    !errors.submitter_email;
 
   const resetForm = () => {
     reset();
     setStep(Step.Personal);
-    setConferenceLogo(null);
     setConferenceImages([]);
   };
 
@@ -84,7 +98,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
       setIsLoading(true);
 
       const logoFormData = new FormData();
-      logoFormData.append('files', conferenceLogo!);
+      logoFormData.append('files', conferenceLogo as File);
       const logoResponse = await uploadImages(logoFormData);
       const logo = logoResponse.data[0].id;
 
@@ -96,8 +110,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
       const pictures = imagesResponse.data.map((image: any) => image.id);
 
       await submitConference({ ...data, logo, pictures });
-      resetForm();
-      toast.success('Conference submitted successfully');
+      handleOpenSuccessModal();
     } catch (e) {
       const errorMsg = (e as any)?.data?.error || 'Error submitting conference';
       toast.error(errorMsg);
@@ -107,125 +120,152 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   });
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit} className='pb-10'>
-        {step === Step.Personal && (
-          <>
-            <div className='flex gap-2'>
-              <MicrophoneIcon />
-              <h1 className='font-bold'>Submit a conference</h1>
-            </div>
+    <>
+      <SubmitSuccessModal
+        content={`Your conference has been \nreceived and is being processed. You’ll be informed once its complete.`}
+        isOpen={openSuccessModal}
+        onClose={handleCloseSuccessModal}
+        onSuccess={() => {
+          resetForm();
+          handleCloseSuccessModal();
+        }}
+      />
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          {step === Step.Personal && (
+            <>
+              <div className='flex gap-2'>
+                <MicrophoneIcon />
+                <h1 className='font-bold'>Submit a conference</h1>
+              </div>
 
-            <div className='mb-6 mt-4 flex flex-col gap-y-2'>
-              <p>
-                We are very happy that you are considering sharing your
-                conference with us.
-              </p>
-              <p>Please fill the form below and we’ll take it from there.</p>
-            </div>
+              <div className='mb-6 mt-4 flex flex-col gap-y-2'>
+                <p>
+                  We are very happy that you are considering sharing your
+                  conference with us.
+                </p>
+                <p>Please fill the form below and we’ll take it from there.</p>
+              </div>
 
-            <div className='mb-10 grid gap-y-6'>
-              <FormInput
-                label='Your name'
-                name='fullName'
-                placeholder='Full name'
-              />
-              <FormInput
-                label='Your personal email'
-                name='email'
-                type='email'
-                placeholder='you@mail.com'
-              />
-            </div>
-            <Button
-              type='button'
-              disabled={!stepOneValid}
-              onClick={() => setStep(Step.Conference)}
-              className='w-full'
-            >
-              Next
-            </Button>
-          </>
-        )}
-
-        {step === Step.Conference && (
-          <>
-            <div className='mb-10 grid gap-y-6'>
-              <LogoPicker
-                title='Conference logo'
-                onLogoChange={(logo) => setConferenceLogo(logo)}
-              />
-              <FormInput
-                label='Conference name'
-                name='title'
-                placeholder='Acme Conference'
-              />
-              <FormInput
-                label='Conference email'
-                name='conferenceEmail'
-                placeholder='hello@conference-mail.com'
-              />
-              <FormInput
-                label='Conference website'
-                name='visit_url'
-                placeholder='https://website.com'
-              />
-              <FormTextArea
-                label='Conference description'
-                name='description'
-                placeholder='What is this conference about'
-              />
-              <FormSelect
-                label='Language (optional)'
-                subLabel='Which language is your conference built around?'
-                name='language'
-                placeholder='Select a language'
-                options={programmingLanguages.map((language) => ({
-                  label: language,
-                  value: language,
-                }))}
-              />
-              <FormSelect
-                label='Tool (optional)'
-                subLabel='Which tool is your conference built around?'
-                name='tool'
-                placeholder='Select a tool'
-                options={tools.map((tool) => ({
-                  label: tool,
-                  value: tool,
-                }))}
-              />
-              <FormSelect
-                label='Location'
-                subLabel='Where is your conference based?'
-                name='region'
-                placeholder='Select a region'
-                options={regions.map((region) => ({
-                  label: region,
-                  value: region,
-                }))}
-              />
-              <div>
-                <h1>Conference Images</h1>
-                <ImagesPicker
-                  onImageChange={(conferenceImages) =>
-                    setConferenceImages(conferenceImages)
-                  }
+              <div className='mb-10 grid gap-y-6'>
+                <FormInput
+                  label='Your name'
+                  name='submitter_name'
+                  placeholder='Full name'
+                />
+                <FormInput
+                  label='Your personal email'
+                  name='submitter_email'
+                  type='email'
+                  placeholder='you@mail.com'
                 />
               </div>
-            </div>
-            <Button
-              type='submit'
-              loading={isLoading}
-              disabled={!isValid || !conferenceLogo || isLoading}
-              className='w-full'
-            >
-              Submit
-            </Button>
-          </>
-        )}
-      </form>
-    </FormProvider>
+              <Button
+                type='button'
+                disabled={!stepOneValid}
+                onClick={() => setStep(Step.Conference)}
+                className='w-full'
+              >
+                Next
+              </Button>
+            </>
+          )}
+
+          {step === Step.Conference && (
+            <>
+              <div className='mb-10 grid gap-y-6'>
+                <LogoPicker
+                  title='Conference logo'
+                  onLogoChange={(logo) => {
+                    setValue('logo', logo || 0);
+                    trigger('logo');
+                  }}
+                />
+                <FormInput
+                  label='Conference name'
+                  name='title'
+                  placeholder='Acme Conference'
+                />
+                <FormInput
+                  label='Conference email'
+                  name='conferenceEmail'
+                  placeholder='hello@conference-mail.com'
+                />
+                <FormInput
+                  label='Conference website'
+                  name='visit_url'
+                  placeholder='https://website.com'
+                />
+                <FormTextArea
+                  label='Conference description'
+                  name='description'
+                  placeholder='What is this conference about'
+                />
+                <FormSelect
+                  label='Language (optional)'
+                  subLabel='Which language is your conference built around?'
+                  name='language'
+                  placeholder='Select a language'
+                  options={programmingLanguages.map((language) => ({
+                    label: language,
+                    value: language,
+                  }))}
+                />
+                <FormSelect
+                  label='Tool (optional)'
+                  subLabel='Which tool is your conference built around?'
+                  name='tool'
+                  placeholder='Select a tool'
+                  options={tools.map((tool) => ({
+                    label: tool,
+                    value: tool,
+                  }))}
+                />
+                <FormSelect
+                  label='Region'
+                  subLabel='Where is your conference based?'
+                  name='region'
+                  placeholder='Select a region'
+                  options={regions.map((region) => ({
+                    label: region,
+                    value: region,
+                  }))}
+                />
+                <FormInput
+                  label='Location'
+                  subLabel='Where will this conference take place?'
+                  name='location'
+                  placeholder='Eg: Accra, Ghana'
+                />
+
+                <div>
+                  <h1>Conference Images</h1>
+                  <ImagesPicker
+                    onImageChange={(conferenceImages) =>
+                      setConferenceImages(conferenceImages)
+                    }
+                  />
+                </div>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Button
+                  type='button'
+                  variant='secondary'
+                  loading={isLoading}
+                  className='w-full'
+                  onClick={() => setStep(Step.Personal)}
+                >
+                  Previous
+                </Button>
+                <Button type='submit' loading={isLoading} className='w-full'>
+                  Submit
+                </Button>
+              </div>
+            </>
+          )}
+        </form>
+      </FormProvider>
+    </>
   );
 };
 

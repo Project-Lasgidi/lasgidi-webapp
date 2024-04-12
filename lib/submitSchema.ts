@@ -11,11 +11,11 @@ const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
 const ACCEPTED_FILE_TYPES = ['image/png'];
 
 export const submitCommunitySchema = object({
-  fullName: string().min(1, 'Full name is required'),
-  email: string()
+  submitter_name: string().min(1, 'Full name is required'),
+  submitter_email: string()
     .min(1, { message: 'Email is required.' })
     .email('This is not a valid email.'),
-  communityEmail: string()
+  community_email: string()
     .min(1, { message: 'Community email is required.' })
     .email('This is not a valid email.'),
   title: string().min(1, 'Title is required'),
@@ -41,8 +41,8 @@ export const submitCommunitySchema = object({
 });
 
 export const submitConferenceSchema = object({
-  fullName: string().min(1, 'Full name is required'),
-  email: string()
+  submitter_name: string().min(1, 'Full name is required'),
+  submitter_email: string()
     .min(1, { message: 'Email is required.' })
     .email('This is not a valid email.'),
   conferenceEmail: string()
@@ -59,7 +59,19 @@ export const submitConferenceSchema = object({
   pictures: number().array(),
   tool: string(),
   language: string(),
-  logo: number(),
+  logo: union([
+    number().positive('Logo is required').min(1, 'Logo is required'),
+    instanceof_(File)
+      .refine(
+        (file) => file === undefined || file!.size <= MAX_UPLOAD_SIZE,
+        'Logo size must be less than 3MB'
+      )
+      .refine(
+        (file) =>
+          file === undefined || ACCEPTED_FILE_TYPES.includes(file!.type),
+        'Logo must be a PNG'
+      ),
+  ]),
 });
 
 export type ISubmitCommunityRequest = TypeOf<typeof submitCommunitySchema>;

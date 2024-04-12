@@ -8,6 +8,7 @@ import {
   OpensourceIcon,
 } from '../Icons';
 import classNames from '@/lib/classNames';
+import { Pill } from '../PIll';
 
 const proposals = [
   {
@@ -87,7 +88,7 @@ export const SubmitPopover = () => {
                   onMouseLeave={() => onMouseLeave(open)}
                   className={classNames(
                     'absolute left-1/2 top-10 z-10 mt-0 w-screen -translate-x-1/2 transform',
-                    'bg-white lg:max-w-[330px] lg:rounded-lg lg:shadow-lg',
+                    'bg-white lg:max-w-sm lg:rounded-lg lg:shadow-lg',
                     'overflow-hidden lg:ring-1 lg:ring-black lg:ring-opacity-5'
                   )}
                 >
@@ -106,7 +107,7 @@ export const SubmitPopover = () => {
                     <div
                       className={classNames(
                         'flex w-screen items-center justify-between',
-                        'gap-2.5 px-4 py-3 lg:w-full lg:justify-normal'
+                        'gap-2.5 px-4 py-3 lg:w-full'
                       )}
                     >
                       <div className='flex items-center gap-2.5'>
@@ -118,14 +119,10 @@ export const SubmitPopover = () => {
                           An Open Source Project
                         </span>
                       </div>
-                      <span
-                        className={classNames(
-                          'inline-flex w-fit justify-center rounded-3xl px-3 py-1.5',
-                          'bg-[#306998] text-center text-xs font-bold lowercase text-white'
-                        )}
-                      >
-                        coming soon
-                      </span>
+                      <Pill
+                        title='coming soon'
+                        className='border-[#306998] bg-[#306998]'
+                      />
                     </div>
                   </div>
                 </Popover.Panel>

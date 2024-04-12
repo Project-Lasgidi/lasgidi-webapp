@@ -34,6 +34,7 @@ import {
   DeleteIcon,
   LogoPlaceholderIcon,
   SpinnerIcon,
+  ModalCloseIcon,
 } from './SVGIcons';
 
 export {
@@ -72,4 +73,5 @@ export {
   DeleteIcon,
   LogoPlaceholderIcon,
   SpinnerIcon,
+  ModalCloseIcon,
 };
