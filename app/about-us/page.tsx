@@ -5,6 +5,7 @@ import { TechStack } from './components/TechStack';
 import NavBar from '@/components/NavBar';
 import Link from 'next/link';
 import { TWITTER_URL } from '@/constants/links';
+import { Metadata } from 'next';
 
 const team = [
   {
@@ -23,6 +24,10 @@ const team = [
     title: 'Software Engineer',
   },
 ];
+
+export const metadata: Metadata = {
+  title: 'About Us',
+};
 
 export default function AboutUS() {
   return (

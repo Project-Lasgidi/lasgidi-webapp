@@ -1,13 +1,12 @@
-'use client';
 import './globals.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, Zoom } from 'react-toastify';
 import { PropsWithChildren } from '@/types';
-import { CustomHead } from '@/components/CustomHead';
 import localFont from 'next/font/local';
-import { useDarkMode } from 'usehooks-ts';
+import { Metadata } from 'next';
+import { projectInfo } from '@/constants/projectInfo';
 
 const sfPro = localFont({
   variable: '--font-sf-pro-display',
@@ -30,11 +29,47 @@ const sfPro = localFont({
   ],
 });
 
+const { appUrl, description, keywords, projectTitle } = projectInfo;
+export const metadata: Metadata = {
+  title: {
+    template: `%s | ${projectTitle}`,
+    default: projectTitle,
+  },
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/images/favicon-light.png',
+        href: '/images/favicon-light.png',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/images/favicon.png',
+        href: '/images/favicon.png',
+      },
+    ],
+  },
+  description,
+  metadataBase: new URL(appUrl),
+  keywords,
+  openGraph: {
+    title: projectTitle,
+    description,
+    url: appUrl,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@ProjectLasgidi',
+    description,
+    title: projectTitle,
+  },
+};
+
 export default function RootLayout({ children }: PropsWithChildren) {
-  const { isDarkMode } = useDarkMode();
   return (
     <html lang='en' className={`${sfPro.variable} font-customFont`}>
-      <CustomHead />
+      {/* <CustomHead /> */}
       <body>
         <main>{children}</main>
         <ToastContainer
@@ -47,7 +82,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={'light'}
           transition={Zoom}
         />
       </body>
