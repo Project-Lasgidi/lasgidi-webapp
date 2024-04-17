@@ -26,13 +26,15 @@ export default async function Home({ searchParams }: Props) {
     <div id='homepage' className='min-h-screen py-10 lg:py-20'>
       <NavBar />
       <Banner />
-      <section className='pt-4 md:mb-24 md:bg-neutral-100 md:pt-16'>
-        <UpcomingConferencesCarousel totalSlides={conferences.length}>
-          {conferences.map((conference, idx) => (
-            <ConferenceCardBig key={idx} conference={conference} />
-          ))}
-        </UpcomingConferencesCarousel>
-      </section>
+      {conferences.length > 0 && (
+        <section className='pt-4 md:mb-24 md:bg-neutral-100 md:pt-16'>
+          <UpcomingConferencesCarousel totalSlides={conferences.length}>
+            {conferences.map((conference, idx) => (
+              <ConferenceCardBig key={idx} conference={conference} />
+            ))}
+          </UpcomingConferencesCarousel>
+        </section>
+      )}
       <CommunityConferenceList
         searchParams={searchParams as ISearchParams}
         initialCommunities={communities}

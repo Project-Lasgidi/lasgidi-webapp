@@ -27,9 +27,9 @@ export const submitCommunitySchema = object({
   community_email: string()
     .min(1, { message: 'Community email is required.' })
     .email('This is not a valid email.'),
-  title: string().min(1, 'Title is required'),
+  name: string().min(1, 'Name is required'),
   description: string().min(1, 'Description is required'),
-  visit_url: string().min(1, 'Visit URL is required'),
+  website: string().min(1, 'Visit URL is required'),
   region: string().min(1, 'Location is required'),
   platforms: string(),
   tool: string(),

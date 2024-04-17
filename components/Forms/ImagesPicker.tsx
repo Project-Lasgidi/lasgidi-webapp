@@ -63,12 +63,12 @@ export const ImagesPicker = ({
           )}
         />
       )}
-      <div className='mt-2 flex items-center gap-x-1.5'>
+      <div className='mt-2 flex items-center gap-x-1'>
         {selectedImages.length > 0 &&
           selectedImages.map((image, index) => (
             <div className='relative' key={index}>
               <DeleteIcon
-                className='absolute bottom-1 right-1 z-10 h-6 w-6 cursor-pointer rounded-full bg-white p-1'
+                className='absolute bottom-2 right-2 z-10 h-6 w-6 cursor-pointer rounded-full bg-white p-1'
                 onClick={() => removeImage(image)}
               />
               <Image
@@ -78,8 +78,9 @@ export const ImagesPicker = ({
                 width={100}
                 height={100}
                 className={classNames(
-                  'h-12 w-[74px] cursor-pointer rounded-xl',
-                  image === currentImage && 'border-[3px] border-green-400'
+                  'h-12 w-[74px] cursor-pointer rounded-xl transition-colors duration-500',
+                  'border-[4px] border-transparent hover:border-gray-300',
+                  image === currentImage && '!border-green-400'
                 )}
                 onClick={() => setCurrentImage(image)}
               />

@@ -5,7 +5,7 @@ export default function getSearchParams(searchParams: ISearchParams) {
     Record<string, string | string[]>
   >((acc, [key, value]) => {
     if (value && typeof value === 'string') {
-      acc[key] = key === 'q' ? value : value.split(',');
+      acc[key] = key === 'q' || key === 'tab' ? value : value.split(',');
     }
     return acc;
   }, {});

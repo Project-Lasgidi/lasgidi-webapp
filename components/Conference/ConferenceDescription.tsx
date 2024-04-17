@@ -62,7 +62,7 @@ export const ConferenceDescription = ({
           height={logo.height}
         />
         <div className='flex flex-col items-start justify-start'>
-          {/* <div className='text-xl font-bold text-black'>{organization}</div> */}
+          <div className='text-xl font-bold text-black'>{name}</div>
           <div className='flex items-center justify-start gap-1'>
             <Link href={website} target='_blank'>
               <div className='flex items-center gap-1'>

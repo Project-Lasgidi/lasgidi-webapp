@@ -47,14 +47,12 @@ export const ConferenceList = ({
 
   return (
     <>
+      {!conferencies.length && (
+        <div className='grid h-40 place-items-center'>
+          <p>No conferences</p>
+        </div>
+      )}
       <div className='flex w-full flex-col gap-4'>
-        {!conferencies.length && (
-          <div className='flex w-full items-center justify-center'>
-            <div className='w-96' />
-            <p>No conferencies</p>
-          </div>
-        )}
-
         {conferencies.map((conference: IConference) => (
           <ConferenceCardSmall key={conference.id} conference={conference} />
         ))}

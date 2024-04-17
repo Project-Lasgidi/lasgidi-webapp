@@ -32,9 +32,9 @@ const defaultValues = {
   submitter_name: '',
   submitter_email: '',
   community_email: '',
-  title: '',
+  name: '',
   description: '',
-  visit_url: '',
+  website: '',
   region: '',
   platforms: '',
   tool: '',
@@ -171,7 +171,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
                 />
                 <FormInput
                   label='Community name'
-                  name='title'
+                  name='name'
                   placeholder='Acme Community'
                 />
                 <FormInput
@@ -181,7 +181,7 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
                 />
                 <FormInput
                   label='Community website'
-                  name='visit_url'
+                  name='website'
                   placeholder='https://website.com'
                 />
                 <FormTextArea
