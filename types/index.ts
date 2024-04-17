@@ -8,6 +8,7 @@ export type PropsWithOptionalChildren<P = unknown> = P & {
 
 export interface ISearchParams {
   q?: string;
+  tab?: BrowseTab;
   tools?: string;
   languages?: string;
   regions?: string;
@@ -57,4 +58,9 @@ export interface IImageUrl {
   url: string;
   width: number;
   height: number;
+}
+
+export enum BrowseTab {
+  COMMUNITY = 'community',
+  CONFERENCE = 'conference',
 }

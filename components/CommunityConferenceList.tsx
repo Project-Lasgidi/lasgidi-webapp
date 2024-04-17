@@ -4,7 +4,13 @@ import SearchBar from '@/components/SearBar';
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import FilterMenu from './FilterMenu';
-import { ICommunity, IConference, IPagination, ISearchParams } from '@/types';
+import {
+  ICommunity,
+  IConference,
+  IPagination,
+  ISearchParams,
+  BrowseTab,
+} from '@/types';
 import classNames from '@/lib/classNames';
 import { CommunityList } from './Community/CommunityList';
 import { ConferenceList } from './Conference/ConferenceList';
@@ -18,14 +24,9 @@ interface ICommunityList {
   initialPagination: IPagination;
 }
 
-enum Page {
-  COMMUNITY = 'community',
-  CONFERENCE = 'conference',
-}
-
 const tabs = [
-  { id: Page.COMMUNITY, label: 'Communities' },
-  { id: Page.CONFERENCE, label: 'Conferences' },
+  { id: BrowseTab.COMMUNITY, label: 'Communities' },
+  { id: BrowseTab.CONFERENCE, label: 'Conferences' },
 ];
 
 const CommunityConferenceList = ({
@@ -34,7 +35,7 @@ const CommunityConferenceList = ({
   initialPagination,
   initialConferences,
 }: ICommunityList) => {
-  const [active, setActive] = useState<Page>(Page.COMMUNITY);
+  const [activeTab, setActiveTab] = useState<BrowseTab>(BrowseTab.COMMUNITY);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);
@@ -42,7 +43,11 @@ const CommunityConferenceList = ({
 
   return (
     <>
-      <FilterMenuModal isOpen={isOpen} onClose={handleClose} />
+      <FilterMenuModal
+        activeTab={activeTab}
+        isOpen={isOpen}
+        onClose={handleClose}
+      />
       <Container>
         <h3
           id='browse'
@@ -54,45 +59,48 @@ const CommunityConferenceList = ({
           <div className='flex items-center justify-between'>
             <div className='flex w-fit items-center gap-4 rounded-3xl bg-neutral-100 p-2'>
               {tabs.map((tab) => (
-                <p
+                <button
                   key={tab.id}
-                  onClick={() => setActive(tab.id)}
+                  onClick={() => setActiveTab(tab.id)}
                   className={classNames(
-                    'cursor-pointer rounded-2xl px-2 py-1 font-normal leading-relaxed text-zinc-600 transition-all duration-200',
-                    active === tab.id &&
-                      'rounded-2xl bg-white px-3 !font-bold text-black'
+                    'rounded-full px-2 py-1 leading-relaxed transition-colors duration-200',
+                    activeTab === tab.id
+                      ? 'rounded-2xl bg-white px-3 font-bold text-black'
+                      : 'font-normal text-zinc-600'
                   )}
                 >
                   {tab.label}
-                </p>
+                </button>
               ))}
             </div>
+
             <FilterIcon
               className='cursor-pointer lg:hidden'
               onClick={handleOpen}
             />
           </div>
-          <SearchBar searchFor='community' />
+          <div className='mb-4 md:mb-0'>
+            <SearchBar activeTab={activeTab} />
+          </div>
         </div>
       </Container>
       <div className='mx-auto flex max-w-[1200px] flex-col md:mt-14 md:flex-row'>
-        <div className='scrollable-div max-h-screen-200 lg:max-h-screen-320 hidden w-1/4 overflow-y-auto overflow-x-hidden pl-4 lg:block xl:pl-0'>
-          <p className='text-xl font-bold text-black'>Filter</p>
-          <FilterMenu />
+        <div className='scrollable-div hidden max-h-screen-200 w-1/4 overflow-y-auto overflow-x-hidden px-4 lg:block lg:max-h-screen-320 xl:pl-0'>
+          <FilterMenu activeTab={activeTab} />
         </div>
         <ul
           key={uuid()}
           role='list'
-          className='scrollable-div max-h-screen-200 lg:max-h-screen-320 flex-1 overflow-y-auto'
+          className='scrollable-div max-h-screen-200 flex-1 overflow-y-auto lg:max-h-screen-320'
         >
-          {active === Page.COMMUNITY && (
+          {activeTab === BrowseTab.COMMUNITY && (
             <CommunityList
               searchParams={searchParams}
               initialCommunities={initialCommunities}
               initialPagination={initialPagination}
             />
           )}
-          {active === Page.CONFERENCE && (
+          {activeTab === BrowseTab.CONFERENCE && (
             <ConferenceList
               searchParams={searchParams}
               initialConferences={initialConferences}

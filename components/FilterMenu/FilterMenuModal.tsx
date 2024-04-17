@@ -1,14 +1,20 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import FilterMenu from '.';
-import classNames from '@/lib/classNames';
+import Button from '../Forms/Button';
+import { BrowseTab } from '@/types';
 
 interface IFilterMenuModal {
   isOpen: boolean;
+  activeTab: BrowseTab;
   onClose: () => void;
 }
 
-export const FilterMenuModal = ({ isOpen, onClose }: IFilterMenuModal) => {
+export const FilterMenuModal = ({
+  isOpen,
+  activeTab,
+  onClose,
+}: IFilterMenuModal) => {
   return (
     <Transition
       show={isOpen}
@@ -22,30 +28,14 @@ export const FilterMenuModal = ({ isOpen, onClose }: IFilterMenuModal) => {
     >
       <Dialog className='relative' onClose={onClose}>
         <div className='fixed inset-0 z-50 flex h-screen w-screen'>
-          <Dialog.Panel className='relative w-full bg-white pt-9'>
-            <div className='px-4'>
-              <div className='flex items-center justify-between'>
-                <p className='text-xl font-bold text-black'>Filter</p>
-                <p className='text-right text-base font-normal text-black underline'>
-                  Clear filters
-                </p>
-              </div>
-              <div className='w-1/2'>
-                <FilterMenu />
-              </div>
+          <Dialog.Panel className='relative w-full bg-white py-4'>
+            <div className='overflow-y-scroll h-full'>
+              <FilterMenu activeTab={activeTab} />
             </div>
-
-            <div className='absolute bottom-0 w-full border-t border-gray-100 bg-white px-4 pb-4 pt-2'>
-              <button
-                onClick={onClose}
-                className={classNames(
-                  'flex w-full items-center justify-center',
-                  'rounded-full bg-black py-3 outline-none',
-                  'text-base font-normal text-white'
-                )}
-              >
+            <div className='absolute bottom-0 z-50 w-full border-t border-gray-100 bg-white px-4 pb-4 pt-2'>
+              <Button onClick={onClose} className='w-full'>
                 Save
-              </button>
+              </Button>
             </div>
           </Dialog.Panel>
         </div>

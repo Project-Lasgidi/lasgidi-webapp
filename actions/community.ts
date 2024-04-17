@@ -2,7 +2,7 @@ import qs from 'qs';
 
 import { axiosInstance } from './axiosIntance';
 import { transformCommunity } from './transformers';
-import { ICommunity, IPagination, IQueryParams } from '@/types';
+import { ICommunity, IPagination, IQueryParams, BrowseTab } from '@/types';
 import { getSearchParams } from '@/lib';
 import { ISubmitCommunityRequest } from '@/lib/submitSchema';
 
@@ -16,6 +16,7 @@ export const fetchCommunities = async ({
 }> => {
   const {
     q = '',
+    tab,
     tools = [],
     languages = [],
     regions = [],
@@ -29,24 +30,25 @@ export const fetchCommunities = async ({
       pageSize,
     },
   };
-  const fields = ['title', 'description'];
+  const fields = ['name', 'description'];
 
-  if (q) {
-    query['filters']['$or'] = fields.map((field) => {
-      const searchField: any = {};
-      searchField[field] = { $containsi: q };
-      return searchField;
-    });
+  if (tab === BrowseTab.COMMUNITY) {
+    if (q) {
+      query['filters']['$or'] = fields.map((field) => ({
+        [field]: { $containsi: q },
+      }));
+    }
+    if (tools.length) {
+      query['filters'] = { tool: { $in: tools } };
+    }
+    if (regions.length) {
+      query['filters'] = { region: { $in: regions } };
+    }
+    if (languages.length) {
+      query['filters'] = { language: { $in: languages } };
+    }
   }
-  if (tools.length) {
-    query['filters'] = { tool: { $in: tools } };
-  }
-  if (regions.length) {
-    query['filters'] = { region: { $in: regions } };
-  }
-  if (languages.length) {
-    query['filters'] = { language: { $in: languages } };
-  }
+
   const queryStr = qs.stringify(query, { encodeValuesOnly: true });
   try {
     const res = await axiosInstance.get(`communities?${queryStr}`);

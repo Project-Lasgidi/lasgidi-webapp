@@ -5,13 +5,18 @@ import { useFilterMenu } from './useFilterMenu';
 import regions from '@/constants/regions';
 import programmingLanguages from '@/constants/programmingLanguages';
 import tools from '@/constants/tools';
+import { BrowseTab } from '@/types';
 
 const transformMenuCaterogy = (title: string, data: string[]) => ({
   title,
   menuItems: data.map((item) => ({ label: item, checked: false })),
 });
 
-const FilterMenu = () => {
+interface IFilterMenu {
+  activeTab: BrowseTab;
+}
+
+const FilterMenu = ({ activeTab }: IFilterMenu) => {
   const initialCategories = useMemo(
     () => [
       transformMenuCaterogy('Regions', regions),
@@ -21,12 +26,26 @@ const FilterMenu = () => {
     []
   );
 
-  const { menuCategories, handleMenuItemCheck } = useFilterMenu({
-    initialCategories,
-  });
+  const { menuCategories, handleMenuItemCheck, clearFilters, hasCheckedItems } =
+    useFilterMenu({
+      activeTab,
+      initialCategories,
+    });
 
   return (
-    <div>
+    <div className='px-4 md:px-0'>
+      <div className='flex items-center justify-between'>
+        <p className='text-xl font-bold text-black'>Filter</p>
+        {hasCheckedItems() && (
+          <p
+            className='cursor-pointer text-right text-base font-normal text-black underline md:hidden'
+            onClick={clearFilters}
+          >
+            Clear filters
+          </p>
+        )}
+      </div>
+
       {menuCategories.map((item) => (
         <FilterMenuItem
           key={item.title}
