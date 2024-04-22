@@ -49,7 +49,7 @@ const defaultValues = {
 };
 
 const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
-  const [step, setStep] = useState<Step>(Step.Conference);
+  const [step, setStep] = useState<Step>(Step.Personal);
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
