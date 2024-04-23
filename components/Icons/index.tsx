@@ -14,7 +14,6 @@ import {
   UncheckedIcon,
   FigmaIcon,
   LoadingIcon,
-  NetlifyIcon,
   GithubLgIcon,
   GithubSmIcon,
   DjangoLgIcon,
@@ -35,6 +34,7 @@ import {
   LogoPlaceholderIcon,
   SpinnerIcon,
   ModalCloseIcon,
+  VercelIcon,
 } from './SVGIcons';
 
 export {
@@ -53,7 +53,6 @@ export {
   UncheckedIcon,
   FigmaIcon,
   LoadingIcon,
-  NetlifyIcon,
   GithubLgIcon,
   GithubSmIcon,
   DjangoLgIcon,
@@ -74,4 +73,5 @@ export {
   LogoPlaceholderIcon,
   SpinnerIcon,
   ModalCloseIcon,
+  VercelIcon,
 };

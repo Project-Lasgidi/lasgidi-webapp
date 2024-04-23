@@ -2,9 +2,9 @@ import React from 'react';
 import {
   FigmaIcon,
   GithubLgIcon,
-  NetlifyIcon,
   NextJsIcon,
   StrapiIcon,
+  VercelIcon,
 } from '@/components/Icons';
 import { StackItem } from './StackItem';
 
@@ -20,11 +20,9 @@ export const TechStack = () => (
           subTitle='Version Control'
           icon={<GithubLgIcon />}
         />
-
-        {/*<StackItem title='Django' subTitle='Back-end' icon={<DjangoLgIcon />} />*/}
       </div>
       <div className='col-span-1 flex flex-col gap-5'>
-        <StackItem title='Netlify' subTitle='Hosting' icon={<NetlifyIcon />} />
+        <StackItem title='Vercel' subTitle='Hosting' icon={<VercelIcon />} />
         <StackItem title='Strapi' subTitle='CMS' icon={<StrapiIcon />} />
       </div>
     </div>
