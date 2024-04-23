@@ -12,16 +12,19 @@ const team = [
     name: 'Hope Adoli 🇬🇭',
     imgUrl: '/images/about-us/hope-adoli.png',
     title: 'Design / Lead',
+    linkedin: 'https://www.linkedin.com/in/hopeadoli',
   },
   {
     name: 'Derek Duafa 🇬🇭',
     imgUrl: '/images/about-us/derek-duafa.png',
     title: 'Software Engineer',
+    linkedin: 'https://www.linkedin.com/in/derek-duafa/',
   },
   {
     name: 'Gyen Abubakar 🇬🇭',
     imgUrl: '/images/about-us/gyen-abubakar.png',
     title: 'Software Engineer',
+    linkedin: 'https://www.linkedin.com/in/gyenabubakar/',
   },
 ];
 
@@ -66,6 +69,7 @@ export default function AboutUS() {
                   name={member.name}
                   imgUrl={member.imgUrl}
                   title={member.title}
+                  linkedin={member.linkedin}
                 />
               ))}
             </section>
