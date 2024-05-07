@@ -6,6 +6,7 @@ import {
   instanceof as instanceof_,
   union,
   array,
+  date,
 } from 'zod';
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
@@ -47,8 +48,14 @@ export const submitConferenceSchema = object({
   website: string().min(1, 'Website is required'),
   region: string().min(1, 'Region is required'),
   location: string().min(1, 'Location is required'),
-  start_date: string().min(1, 'Start date is required'),
-  end_date: string().min(1, 'End date is required'),
+  start_date: date({
+    required_error: 'Start date is required',
+    invalid_type_error: 'Invalid date!',
+  }),
+  end_date: date({
+    required_error: 'End date is required',
+    invalid_type_error: 'Invalid date!',
+  }),
   platforms: string().array(),
   pictures: array(getFileSchema('Picture')).min(
     1,

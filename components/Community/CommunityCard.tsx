@@ -43,7 +43,7 @@ export const CommunityCard = ({
     <div className='flex flex-col gap-6 md:flex-row'>
       <div className='flex gap-6'>
         <Image
-          className='group aspect-square h-32 w-32 shrink-0 overflow-hidden rounded-2xl object-contain group-hover:opacity-75'
+          className='aspect-square h-32 w-32 shrink-0 overflow-hidden rounded-2xl object-fill hover:opacity-75'
           src={logo.url}
           alt='community icon'
           width={logo.width}
