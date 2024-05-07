@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -22,7 +22,7 @@ import LogoPicker from '../Forms/LogoPicker';
 import { ImagesPicker } from '../Forms/ImagesPicker';
 import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
-import FormDateRangeInput from '../Forms/FormDateRangeInput';
+import { FormDatePicker } from '../Forms/FormDatePicker';
 
 interface SubmitConferenceFormProps {}
 
@@ -39,8 +39,8 @@ const defaultValues = {
   website: '',
   region: '',
   location: '',
-  start_date: '',
-  end_date: '',
+  // start_date: ,
+  // end_date: '',
   platforms: [],
   pictures: [],
   tool: '',
@@ -67,6 +67,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   });
 
   const {
+    control,
     reset,
     watch,
     trigger,
@@ -80,6 +81,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
   const conferenceLogo = watch('logo');
   const conferencePictures = watch('pictures');
   const startDate = watch('start_date');
+  const endDate = watch('end_date');
 
   const isValidFullName = watchedFullName?.trim().length > 0;
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watchedEmail);
@@ -219,18 +221,53 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                     value: tool,
                   }))}
                 />
-                <FormDateRangeInput
-                  label='Conference date'
-                  subLabel='When will your conference take place?'
-                  startName='start_date'
-                  endName='end_date'
-                  minStartDate={new Date().toISOString().split('T')[0]}
-                  minEndDate={
-                    startDate
-                      ? new Date(startDate).toISOString().split('T')[0]
-                      : ''
-                  }
-                />
+                <div>
+                  <div className='mb-1.5'>
+                    <label
+                      htmlFor='start_date'
+                      className='block font-bold text-gray-700'
+                    >
+                      Conference date
+                    </label>
+                    <span className='mt-0.5 block leading-4 text-gray-500'>
+                      When will your conference take place?
+                    </span>
+                  </div>
+                  <div className='flex gap-x-2'>
+                    <Controller
+                      name='start_date'
+                      rules={{ required: true }}
+                      control={control}
+                      render={({ field: { onChange, ...rest } }) => (
+                        <FormDatePicker
+                          minDate={new Date()}
+                          placeholder='Start Date'
+                          error={errors.start_date?.message}
+                          onChange={(date) => {
+                            onChange(date);
+                            trigger('start_date');
+                            endDate && setValue('end_date', date!);
+                          }}
+                          {...rest}
+                        />
+                      )}
+                    />
+                    <Controller
+                      name='end_date'
+                      rules={{ required: true }}
+                      control={control}
+                      render={({ field }) => (
+                        <FormDatePicker
+                          minDate={startDate ? new Date(startDate) : null}
+                          placeholder='End Date'
+                          error={errors.end_date?.message}
+                          {...field}
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+
                 <FormSelect
                   label='Region'
                   subLabel='Where is your conference based?'

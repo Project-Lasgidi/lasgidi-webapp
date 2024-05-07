@@ -35,6 +35,7 @@ import {
   SpinnerIcon,
   ModalCloseIcon,
   VercelIcon,
+  DateIcon,
 } from './SVGIcons';
 
 export {
@@ -74,4 +75,5 @@ export {
   SpinnerIcon,
   ModalCloseIcon,
   VercelIcon,
+  DateIcon,
 };
