@@ -233,7 +233,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                       When will your conference take place?
                     </span>
                   </div>
-                  <div className='flex gap-x-2'>
+                  <div className='flex flex-col gap-2 sm:flex-row'>
                     <Controller
                       name='start_date'
                       rules={{ required: true }}
