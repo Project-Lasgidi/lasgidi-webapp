@@ -17,7 +17,7 @@ const FilterMenuItem = ({
   <Disclosure>
     {({ open }) => (
       <>
-        <Disclosure.Button as='div' className='mt-6 w-full'>
+        <Disclosure.Button as='div' className='mt-2 w-full'>
           <div className='flex cursor-pointer items-center justify-between'>
             <p className='text-base font-bold leading-relaxed text-black'>
               {title}

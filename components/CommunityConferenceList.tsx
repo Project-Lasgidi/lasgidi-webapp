@@ -85,8 +85,11 @@ const CommunityConferenceList = ({
         </div>
       </Container>
       <div className='mx-auto flex max-w-[1200px] flex-col md:mt-14 md:flex-row'>
-        <div className='scrollable-div hidden max-h-screen-200 w-1/4 overflow-y-auto overflow-x-hidden px-4 lg:block lg:max-h-screen-320 xl:pl-0'>
-          <FilterMenu activeTab={activeTab} />
+        <div className='w-1/4'>
+          <p className='text-xl font-bold text-black mb-4'>Filter</p>
+          <div className='scrollable-div hidden max-h-screen-200 w-full overflow-y-auto overflow-x-hidden px-4 lg:block lg:max-h-screen-320 xl:pl-0'>
+            <FilterMenu activeTab={activeTab} />
+          </div>
         </div>
         <ul
           key={uuid()}

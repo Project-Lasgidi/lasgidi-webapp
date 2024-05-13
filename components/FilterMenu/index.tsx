@@ -35,7 +35,6 @@ const FilterMenu = ({ activeTab }: IFilterMenu) => {
   return (
     <div className='px-4 lg:px-0'>
       <div className='flex items-center justify-between'>
-        <p className='text-xl font-bold text-black'>Filter</p>
         {hasCheckedItems() && (
           <p
             className='cursor-pointer text-right text-base font-normal text-black underline md:hidden'

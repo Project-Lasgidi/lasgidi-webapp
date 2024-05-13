@@ -29,7 +29,10 @@ export const FilterMenuModal = ({
       <Dialog className='relative' onClose={onClose}>
         <div className='fixed inset-0 z-50 flex h-screen w-screen'>
           <Dialog.Panel className='relative w-full bg-white py-4'>
-            <div className='overflow-y-scroll h-full'>
+            <div className='mb-4 px-4'>
+              <p className='text-xl font-bold text-black'>Filter</p>
+            </div>
+            <div className='h-full overflow-y-scroll'>
               <FilterMenu activeTab={activeTab} />
             </div>
             <div className='absolute bottom-0 z-50 w-full border-t border-gray-100 bg-white px-4 pb-4 pt-2'>
