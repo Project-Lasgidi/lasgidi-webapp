@@ -2,19 +2,16 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import FilterMenu from '.';
 import Button from '../Forms/Button';
-import { BrowseTab } from '@/types';
+import { useFilterMenu } from './useFilterMenu';
 
 interface IFilterMenuModal {
   isOpen: boolean;
-  activeTab: BrowseTab;
   onClose: () => void;
 }
 
-export const FilterMenuModal = ({
-  isOpen,
-  activeTab,
-  onClose,
-}: IFilterMenuModal) => {
+export const FilterMenuModal = ({ isOpen, onClose }: IFilterMenuModal) => {
+  const { hasCheckedItems, clearFilters } = useFilterMenu();
+
   return (
     <Transition
       show={isOpen}
@@ -30,15 +27,25 @@ export const FilterMenuModal = ({
         <div className='fixed inset-0 z-50 flex h-screen w-screen'>
           <Dialog.Panel className='relative w-full bg-white py-4'>
             <div className='mb-4 px-4'>
-              <p className='text-xl font-bold text-black'>Filter</p>
+              <div className='flex flex-wrap items-center justify-between'>
+                <p className='text-xl font-bold text-black'>Filter</p>
+                <div className='flex items-center gap-6'>
+                  {hasCheckedItems() && (
+                    <button
+                      className='text-base font-normal text-black underline outline-none focus:outline-none'
+                      onClick={clearFilters}
+                    >
+                      Clear filters
+                    </button>
+                  )}
+                  <Button onClick={onClose} className='!py-1.5'>
+                    Save
+                  </Button>
+                </div>
+              </div>
             </div>
             <div className='h-full overflow-y-scroll'>
-              <FilterMenu activeTab={activeTab} />
-            </div>
-            <div className='absolute bottom-0 z-50 w-full border-t border-gray-100 bg-white px-4 pb-4 pt-2'>
-              <Button onClick={onClose} className='w-full'>
-                Save
-              </Button>
+              <FilterMenu />
             </div>
           </Dialog.Panel>
         </div>

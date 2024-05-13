@@ -16,6 +16,7 @@ import { CommunityList } from './Community/CommunityList';
 import { ConferenceList } from './Conference/ConferenceList';
 import { FilterIcon } from './Icons';
 import { FilterMenuModal } from './FilterMenu/FilterMenuModal';
+import { useActiveTab } from '../hooks';
 
 interface ICommunityList {
   searchParams: ISearchParams;
@@ -35,7 +36,8 @@ const CommunityConferenceList = ({
   initialPagination,
   initialConferences,
 }: ICommunityList) => {
-  const [activeTab, setActiveTab] = useState<BrowseTab>(BrowseTab.COMMUNITY);
+  const { activeTab, handleActiveTab } = useActiveTab();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);
@@ -43,11 +45,7 @@ const CommunityConferenceList = ({
 
   return (
     <>
-      <FilterMenuModal
-        activeTab={activeTab}
-        isOpen={isOpen}
-        onClose={handleClose}
-      />
+      <FilterMenuModal isOpen={isOpen} onClose={handleClose} />
       <Container>
         <h3
           id='browse'
@@ -61,7 +59,7 @@ const CommunityConferenceList = ({
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => handleActiveTab(tab.id)}
                   className={classNames(
                     'rounded-full px-2 py-1 leading-relaxed transition-colors duration-200',
                     activeTab === tab.id
@@ -80,15 +78,15 @@ const CommunityConferenceList = ({
             />
           </div>
           <div className='mb-4 md:mb-0'>
-            <SearchBar activeTab={activeTab} />
+            <SearchBar />
           </div>
         </div>
       </Container>
       <div className='mx-auto flex max-w-[1200px] flex-col md:mt-14 md:flex-row'>
-        <div className='w-1/4'>
-          <p className='text-xl font-bold text-black mb-4'>Filter</p>
-          <div className='scrollable-div hidden max-h-screen-200 w-full overflow-y-auto overflow-x-hidden px-4 lg:block lg:max-h-screen-320 xl:pl-0'>
-            <FilterMenu activeTab={activeTab} />
+        <div className='hidden w-1/4 px-4 lg:block xl:pl-0'>
+          <p className='mb-4 text-xl font-bold text-black'>Filter</p>
+          <div className='scrollable-div max-h-screen-200 w-full overflow-y-auto overflow-x-hidden lg:max-h-screen-320 '>
+            <FilterMenu />
           </div>
         </div>
         <ul
