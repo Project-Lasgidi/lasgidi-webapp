@@ -1,6 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseTab } from '@/types';
+import regions from '@/constants/regions';
+import programmingLanguages from '@/constants/programmingLanguages';
+import tools from '@/constants/tools';
+
+const transformMenuCaterogy = (title: string, data: string[]) => ({
+  title,
+  menuItems: data.map((item) => ({ label: item, checked: false })),
+});
+
+const initialCategories = [
+  transformMenuCaterogy('Regions', regions),
+  transformMenuCaterogy('Languages', programmingLanguages),
+  transformMenuCaterogy('Tools', tools),
+];
 
 interface IMenuCategory {
   title: string;
@@ -10,13 +23,7 @@ interface IMenuCategory {
   }[];
 }
 
-export const useFilterMenu = ({
-  activeTab,
-  initialCategories,
-}: {
-  activeTab: BrowseTab;
-  initialCategories: IMenuCategory[];
-}) => {
+export const useFilterMenu = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -65,20 +72,14 @@ export const useFilterMenu = ({
         const lowerCategory = category.toLowerCase();
         if (checkedLabels.length) {
           params.set(lowerCategory, checkedLabels.join(','));
-          params.set('tab', activeTab);
         } else {
           params.delete(lowerCategory);
         }
       });
 
-      const paramsCount = Array.from(searchParams.entries()).length;
-      if (paramsCount === 1) {
-        params.delete('tab');
-      }
-
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [pathname, router, searchParams, activeTab]
+    [pathname, router, searchParams]
   );
 
   const clearFilters = () => {
@@ -103,6 +104,27 @@ export const useFilterMenu = ({
     const checkedLabels = getCheckedLabels(menuCategories);
     createQueryParams(checkedLabels);
   }, [createQueryParams, menuCategories]);
+
+  useEffect(() => {
+    const parseSearchParams = (key: string): string[] =>
+      searchParams.get(key)?.split(',') || [];
+
+    const checkedItems: Record<string, string[]> = {
+      Tools: parseSearchParams('tools'),
+      Regions: parseSearchParams('regions'),
+      Languages: parseSearchParams('languages'),
+    };
+
+    setMenuCategories((prevMenuCategories) =>
+      prevMenuCategories.map((category) => ({
+        ...category,
+        menuItems: category.menuItems.map((item) => ({
+          ...item,
+          checked: checkedItems[category.title].includes(item.label),
+        })),
+      }))
+    );
+  }, [searchParams]);
 
   return {
     menuCategories,

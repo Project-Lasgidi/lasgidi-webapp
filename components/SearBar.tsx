@@ -3,11 +3,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { SearchIcon } from './Icons';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from '@/lib/classNames';
-import { BrowseTab } from '@/types';
 
 const DEBOUNCE_TIME = 300;
 
-const SearchBar = ({ activeTab }: { activeTab: BrowseTab }) => {
+const SearchBar = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -16,13 +15,8 @@ const SearchBar = ({ activeTab }: { activeTab: BrowseTab }) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('q', term);
-      params.set('tab', activeTab);
     } else {
       params.delete('q');
-      const paramsCount = Array.from(searchParams.entries()).length;
-      if (paramsCount <= 1) {
-        params.delete('tab');
-      }
     }
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, DEBOUNCE_TIME);
