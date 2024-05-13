@@ -10,7 +10,7 @@ import { SubmitPopover } from './SubmitPopover';
 import classNames from '@/lib/classNames';
 
 export const DesktopNav = () => (
-  <Container className='hidden py-4 lg:block'>
+  <Container className='hidden py-2.5 lg:block'>
     <div className='flex items-center justify-between'>
       <div className='text-sm font-normal text-zinc-600'>
         v {packageJson.version}
@@ -18,14 +18,14 @@ export const DesktopNav = () => (
 
       <div
         className={classNames(
-          'flex items-center justify-start gap-10  bg-white bg-opacity-80 py-3 pl-4 pr-6',
+          'flex items-center justify-start gap-10 bg-white bg-opacity-80 pl-4 pr-6',
           'rounded-3xl border border-neutral-100 border-opacity-60 backdrop-blur-2xl'
         )}
       >
         <Link href='/'>
           <LogoIcon className='cursor-pointer' />
         </Link>
-        <nav className='flex items-start justify-start gap-5'>
+        <nav className='flex items-center gap-x-5'>
           {routes.map(({ name, href }) => {
             if (name.toLowerCase() === 'submit') {
               return <SubmitPopover key={name} />;
