@@ -7,10 +7,7 @@ export const formatDateRange = (startDateStr: string, endDateStr: string) => {
   if (isSameYear(startDate, endDate) && isSameMonth(startDate, endDate)) {
     const startDay = format(startDate, 'd');
     const endDay = format(endDate, 'd');
-    return `${format(startDate, 'MMM')} ${startDay}-${endDay}, ${format(
-      startDate,
-      'yyyy'
-    )}`;
+    return `${format(startDate, 'MMM')} ${startDay}-${endDay}, ${format(startDate, 'yyyy')}`;
   } else {
     const startFormat = format(startDate, 'MMM d, yyyy');
     const endFormat = format(endDate, 'MMM d, yyyy');

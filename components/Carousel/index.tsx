@@ -2,5 +2,5 @@ export {
   default,
   ConferencesCarouselContext,
   type ConferencesCarouselContextValue,
-} from './UpcomingConferencesCarousel.tsx';
-export { default as CarouselControls } from './Controls.tsx';
+} from './UpcomingConferencesCarousel';
+export { default as CarouselControls } from './Controls';

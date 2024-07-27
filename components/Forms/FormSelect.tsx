@@ -38,7 +38,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
             'appearance-none focus:border-black focus:outline-none',
             !!errors[name]?.message && 'border-red-500'
           )}
-          placeholder={placeholder}
+          // placeholder={placeholder}
           aria-invalid={errors[name]?.message ? 'true' : 'false'}
           {...register(name)}
         >

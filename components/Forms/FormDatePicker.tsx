@@ -8,8 +8,8 @@ interface IFormDatePicker {
   placeholder: string;
   error?: string;
   onChange: (value: Date | null) => void;
-  minDate?: Date | null;
-  maxDate?: Date | null;
+  minDate?: Date;
+  maxDate?: Date;
   value?: Date | string | null;
 }
 

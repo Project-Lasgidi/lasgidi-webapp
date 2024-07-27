@@ -13,6 +13,7 @@ const MAX_UPLOAD_SIZE = 1024 * 1024 * 3; // 3MB
 
 const getFileSchema = (name: string) =>
   union([
+    string().min(1, `${name} is required`),
     number().positive(`${name} is required`).min(1, `${name} is required`),
     instanceof_(File).refine(
       (file) => file === undefined || file.size <= MAX_UPLOAD_SIZE,

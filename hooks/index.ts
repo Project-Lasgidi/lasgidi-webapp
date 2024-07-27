@@ -1,2 +1,2 @@
-export * from './useCarousel.tsx';
+export * from './useCarousel';
 export * from './useActiveTab';
