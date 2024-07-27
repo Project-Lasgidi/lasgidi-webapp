@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "^18.20.2 || >=20.9.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -12,18 +12,25 @@
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true npm run build",
     "serve": "serve .next/analyze",
-    "format": "prettier --write --ignore-path .gitignore ."
+    "format": "prettier --write --ignore-path .gitignore .",
+    "generate:types": "payload generate:types"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.3.4",
+    "@payloadcms/db-mongodb": "3.0.0-beta.70",
+    "@payloadcms/next": "3.0.0-beta.70",
+    "@payloadcms/plugin-cloud": "3.0.0-beta.70",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.70",
     "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "framer-motion": "^10.16.4",
+    "graphql": "^16.8.1",
     "lodash": "^4.17.21",
-    "next": "^14.2.3",
+    "next": "^14.2.5",
+    "payload": "3.0.0-beta.70",
     "qs": "^6.11.2",
     "react": "^18",
     "react-datepicker": "^6.9.0",
@@ -33,6 +40,7 @@
     "react-intersection-observer": "^9.5.3",
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.5",
+    "sharp": "^0.33.4",
     "slick-carousel": "^1.8.1",
     "use-debounce": "^10.0.0",
     "usehooks-ts": "^2.9.1",
