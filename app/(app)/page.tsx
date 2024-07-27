@@ -4,7 +4,7 @@ import { ConferenceCardBig } from '@/components/Conference/ConferenceCard/Big';
 import NavBar from '@/components/NavBar';
 import UpcomingConferencesCarousel from '@/components/Carousel';
 import { ISearchParams } from '@/types';
-import Banner from '../components/Banner';
+import Banner from '../../components/Banner';
 import { fetchConferences } from '@/actions/conference';
 
 type Props = {
