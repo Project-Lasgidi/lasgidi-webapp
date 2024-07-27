@@ -15,8 +15,8 @@ export interface ISearchParams {
 }
 
 export type IQueryParams = {
+  limit?: number;
   page?: number;
-  pageSize?: number;
   searchParams?: ISearchParams;
 };
 
@@ -30,10 +30,8 @@ export type ICommunity = {
 };
 
 export type IPagination = {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
+  nextPage?: number;
+  hasNextPage: boolean;
 };
 
 export interface IConference {
