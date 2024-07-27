@@ -1,3 +1,4 @@
+import { s3Storage } from '@payloadcms/storage-s3';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
@@ -13,6 +14,20 @@ import { UsersCollection } from './payload/collections/Users';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+const s3StoragePlugin = s3Storage({
+  collections: {
+    ['media']: true,
+  },
+  bucket: process.env.S3_BUCKET!,
+  config: {
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+    },
+    region: process.env.S3_REGION!,
+  },
+});
 
 export default buildConfig({
   admin: {
@@ -35,5 +50,5 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [],
+  plugins: [s3StoragePlugin],
 });
