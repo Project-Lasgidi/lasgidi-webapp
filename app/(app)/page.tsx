@@ -1,46 +1,42 @@
-import { fetchCommunities } from '@/actions/community';
-import CommunityConferenceList from '@/components/CommunityConferenceList';
-import { ConferenceCardBig } from '@/components/Conference/ConferenceCard/Big';
 import NavBar from '@/components/NavBar';
-import UpcomingConferencesCarousel from '@/components/Carousel';
-import { ISearchParams } from '@/types';
-import Banner from '../../components/Banner';
-import { fetchConferences } from '@/actions/conference';
+import { BrowseTabEnum, ISearchParams } from '@/types';
+import { Banner } from '@/components/Banner';
+import { v4 as uuid } from 'uuid';
+import { Suspense } from 'react';
+import { UpcomingConferences } from '@/components/Conference/UpcomingConferences';
+import { CommunityListDelegate } from '@/components/Community/CommunityListDelegate';
+import { ConferenceListDelegate } from '@/components/Conference/ConferenceListDelegate';
+import { FilterSidebar } from '@/components/FilterSidebar';
+import { BrowseControls } from '@/components/BrowseControls';
 
 type Props = {
   searchParams?: ISearchParams;
 };
 
-export const dynamic = 'force-static';
-
-export default async function Home({ searchParams }: Props) {
-  const { communities = [], pagination } = await fetchCommunities({
-    searchParams,
-  });
-
-  const { conferences = [], pagination: page } = await fetchConferences({
-    searchParams,
-  });
-
+export default async function Page({ searchParams }: Props) {
   return (
     <div id='homepage' className='min-h-screen py-10 lg:py-20'>
       <NavBar />
       <Banner />
-      {conferences.length > 0 && (
-        <section className='pt-4 md:mb-24 md:bg-neutral-100 md:pt-16'>
-          <UpcomingConferencesCarousel totalSlides={conferences.length}>
-            {conferences.map((conference, idx) => (
-              <ConferenceCardBig key={idx} conference={conference} />
-            ))}
-          </UpcomingConferencesCarousel>
-        </section>
-      )}
-      <CommunityConferenceList
-        searchParams={searchParams as ISearchParams}
-        initialCommunities={communities}
-        initialConferences={conferences}
-        initialPagination={pagination}
-      />
+      <Suspense fallback={<div>Loading carousel...</div>}>
+        <UpcomingConferences />
+      </Suspense>
+      <BrowseControls />
+      <div className='app-container flex flex-col md:mt-14 md:flex-row'>
+        <FilterSidebar />
+        <ul key={uuid()} role='list' className='flex-1'>
+          {searchParams?.tab === BrowseTabEnum.COMMUNITY && (
+            <Suspense fallback={<div>Loading communites...</div>}>
+              <CommunityListDelegate searchParams={searchParams} />
+            </Suspense>
+          )}
+          {searchParams?.tab === BrowseTabEnum.CONFERENCE && (
+            <Suspense fallback={<div>Loading conferences...</div>}>
+              <ConferenceListDelegate searchParams={searchParams} />
+            </Suspense>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
