@@ -8,7 +8,7 @@ import {
   ISubmitCommunityRequest,
   submitCommunitySchema,
 } from '@/lib/submitSchema';
-import { submitCommunity, uploadImages } from '@/actions/community';
+import { submitCommunity } from '@/actions/community';
 import FormInput from '@/components/Forms/FormInput';
 import Button from '@/components/Forms/Button';
 import FormTextArea from '@/components/Forms/FormTextArea';
@@ -20,8 +20,7 @@ import programmingLanguages from '@/constants/programmingLanguages';
 import LogoPicker from '../Forms/LogoPicker';
 import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
-
-interface SubmitCommunityFormProps {}
+import { uploadImage } from '@/actions/uploads';
 
 enum Step {
   Personal = 'personal',
@@ -42,7 +41,7 @@ const defaultValues = {
   logo: 0,
 };
 
-const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
+const SubmitCommunityForm = () => {
   const [step, setStep] = useState<Step>(Step.Personal);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
@@ -90,16 +89,11 @@ const SubmitCommunityForm = ({}: SubmitCommunityFormProps) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
-
-      const formData = new FormData();
-      formData.append('files', communityLogo as File);
-      const logoResponse = await uploadImages(formData);
-      const logo = logoResponse.data[0].id;
-
-      await submitCommunity({ ...data, logo });
+      const { id: logo } = await uploadImage(communityLogo as File);
+      await submitCommunity({ ...data, logo: logo });
       handleOpenSuccessModal();
     } catch (e) {
-      const errorMsg = (e as any)?.data?.error || 'Error submitting community';
+      const errorMsg = (e as any).message || 'Error submitting community';
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);
