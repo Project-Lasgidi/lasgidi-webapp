@@ -1,9 +1,5 @@
 import {
   LogoIcon,
-  DjangoIcon,
-  WorldWideWebIcon,
-  PythonIcon,
-  GithubIcon,
   TwitterIcon,
   TwitterIconSm,
   CalendarIcon,
@@ -40,10 +36,6 @@ import {
 
 export {
   LogoIcon,
-  DjangoIcon,
-  WorldWideWebIcon,
-  PythonIcon,
-  GithubIcon,
   TwitterIcon,
   TwitterIconSm,
   CalendarIcon,

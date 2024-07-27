@@ -1,14 +1,15 @@
 import React from 'react';
 import { CalendarIcon, LinkToIcon, LocationIcon } from '../Icons';
 import Image from 'next/image';
-import { IConference } from '@/types';
 import Link from 'next/link';
 import classNames from '@/lib/classNames';
 import { formatDateRange } from '@/lib/formatDateRange';
+import { Conference } from '@/payload-types';
+import { getPayloadImageUrl } from '@/lib/utils';
 
 export interface IConferenceDescription {
   isBig?: boolean;
-  conference: Omit<IConference, 'pictures'>;
+  conference: Omit<Conference, 'pictures'>;
 }
 
 export const ConferenceDescription = ({
@@ -55,13 +56,13 @@ export const ConferenceDescription = ({
 
       <div className='mt-6 flex gap-4'>
         <Image
-          className='h-10 w-10 rounded-3xl'
-          src={logo.url}
+          className='h-10 w-10 rounded-full'
+          src={getPayloadImageUrl(logo)!}
           alt='conference logo'
-          width={logo.width}
-          height={logo.height}
+          width={100}
+          height={100}
         />
-        <div className='flex flex-col items-start justify-start'>
+        <div className='flex flex-col items-start justify-start pb-4'>
           <div className='text-xl font-bold text-black'>{name}</div>
           <div className='flex items-center justify-start gap-1'>
             <Link href={website} target='_blank'>

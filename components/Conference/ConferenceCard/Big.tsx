@@ -2,17 +2,17 @@
 import { useContext, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import { useIntersectionObserver } from '@uidotdev/usehooks';
-import Container from '@/components/Container';
 import { useCarousel } from '@/hooks';
 import { ConferenceDescription } from '../ConferenceDescription';
-import { IConference } from '@/types';
 import { classNames } from '@/lib';
 import { ConferencesCarouselContext } from '@/components/Carousel';
+import { Conference } from '@/payload-types';
+import { getPayloadImageUrl } from '@/lib/utils';
 
 interface IConferenceCardBig {
-  conference: IConference;
+  conference: Conference;
 }
 
 export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
@@ -44,7 +44,7 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
     }
 
     if (intervalRef.current) {
-      if (currentSlide === conference.pictures.length - 1) {
+      if (currentSlide === conference.pictures?.length - 1) {
         clearCarouselInterval();
 
         setTimeout(() => {
@@ -86,9 +86,9 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
 
   return (
     <div ref={ref}>
-      <Container
+      <div
         className={classNames(
-          'w-full px-0 md:px-4',
+          'app-container w-full',
           'relative flex flex-col overflow-x-hidden overflow-y-hidden',
           'bg-neutral-100 md:h-[550px] md:flex-row md:bg-transparent'
         )}
@@ -103,15 +103,15 @@ export const ConferenceCardBig = ({ conference }: IConferenceCardBig) => {
               <Image
                 key={idx}
                 className='h-72 w-full object-cover md:h-[550px] md:rounded-t-2xl'
-                src={picture.url}
+                src={getPayloadImageUrl(picture.picture)!}
                 alt='Carousel'
-                width={picture.width}
-                height={picture.height}
+                width={100}
+                height={100}
               />
             ))}
           </Slider>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,15 @@
 'use client';
 import Image from 'next/image';
 import Slider from 'react-slick';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import { CarouselControls } from '@/components/Carousel';
 import { useCarousel } from '@/hooks';
 import { ConferenceDescription } from '../ConferenceDescription';
-import type { IConference } from '@/types';
+import { Conference } from '@/payload-types';
+import { getPayloadImageUrl } from '@/lib/utils';
 
 interface IConferenceCardSmall {
-  conference: IConference;
+  conference: Conference;
 }
 
 export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
@@ -23,20 +24,20 @@ export const ConferenceCardSmall = ({ conference }: IConferenceCardSmall) => {
   } = useCarousel({ speed: 500, autoplaySpeed: 5000 });
 
   return (
-    <div className='relative flex flex-col gap-4 overflow-x-hidden md:flex-row lg:ml-[10%]'>
-      <div className='w-full px-4 md:order-2 md:max-w-md xl:px-0'>
+    <div className='relative flex flex-col gap-x-6 overflow-x-hidden pb-6 md:flex-row md:py-6'>
+      <div className='w-full md:order-2 md:max-w-md'>
         <ConferenceDescription conference={conferenceItem} />
       </div>
-      <div className='relative h-[300px] w-full md:w-96 md:pl-4'>
+      <div className='relative h-[300px] w-full md:w-[380px]'>
         <Slider ref={sliderRef} {...settings}>
           {pictures.map((picture, idx) => (
             <Image
               key={idx}
-              className='relative aspect-square h-[300px] w-full object-cover md:rounded-2xl'
-              src={picture.url}
+              className='relative aspect-square h-[300px] w-full object-cover md:rounded-2xl '
+              src={getPayloadImageUrl(picture.picture)!}
               alt='Conference picture'
-              width={picture.width}
-              height={picture.height}
+              width={100}
+              height={100}
             />
           ))}
         </Slider>
