@@ -13,6 +13,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    conferences: Conference;
+    communities: Community;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -47,6 +49,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -76,6 +79,136 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conferences".
+ */
+export interface Conference {
+  id: string;
+  name: string;
+  logo: string | Media;
+  website: string;
+  description: string;
+  pictures: {
+    picture: string | Media;
+    id?: string | null;
+  }[];
+  language?: string | null;
+  tool?:
+    | (
+        | 'Docker'
+        | 'Kubernetes'
+        | 'Git'
+        | 'Jenkins'
+        | 'AWS'
+        | 'Azure'
+        | 'Google Cloud Platform'
+        | 'React'
+        | 'Angular'
+        | 'Vue.js'
+        | 'Node.js'
+        | 'TensorFlow'
+        | 'PyTorch'
+        | 'Pandas'
+        | 'Jupyter'
+        | 'Elasticsearch'
+        | 'MongoDB'
+        | 'PostgreSQL'
+        | 'GraphQL'
+        | 'Redis'
+        | 'Adobe Photoshop'
+        | 'Adobe Illustrator'
+        | 'Sketch'
+        | 'Figma'
+        | 'Adobe XD'
+        | 'InVision'
+        | 'Affinity Designer'
+        | 'Canva'
+        | 'Blender'
+        | 'AutoCAD'
+      )
+    | null;
+  location?: string | null;
+  submitter_name: string;
+  submitter_email: string;
+  start_date: string;
+  end_date: string;
+  region?:
+    | ('Africa' | 'Asia' | 'Central America' | 'Europe' | 'Middle East' | 'North America' | 'Pacific' | 'South America')
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "communities".
+ */
+export interface Community {
+  id: string;
+  name: string;
+  website: string;
+  description: string;
+  region?:
+    | ('Africa' | 'Asia' | 'Central America' | 'Europe' | 'Middle East' | 'North America' | 'Pacific' | 'South America')
+    | null;
+  tool?:
+    | (
+        | 'Docker'
+        | 'Kubernetes'
+        | 'Git'
+        | 'Jenkins'
+        | 'AWS'
+        | 'Azure'
+        | 'Google Cloud Platform'
+        | 'React'
+        | 'Angular'
+        | 'Vue.js'
+        | 'Node.js'
+        | 'TensorFlow'
+        | 'PyTorch'
+        | 'Pandas'
+        | 'Jupyter'
+        | 'Elasticsearch'
+        | 'MongoDB'
+        | 'PostgreSQL'
+        | 'GraphQL'
+        | 'Redis'
+        | 'Adobe Photoshop'
+        | 'Adobe Illustrator'
+        | 'Sketch'
+        | 'Figma'
+        | 'Adobe XD'
+        | 'InVision'
+        | 'Affinity Designer'
+        | 'Canva'
+        | 'Blender'
+        | 'AutoCAD'
+      )
+    | null;
+  language?:
+    | (
+        | 'JavaScript'
+        | 'Python'
+        | 'Java'
+        | 'C#'
+        | 'C++'
+        | 'C'
+        | 'TypeScript'
+        | 'Swift'
+        | 'PHP'
+        | 'Ruby'
+        | 'Go'
+        | 'Kotlin'
+        | 'Rust'
+        | 'Scala'
+      )
+    | null;
+  logo: string | Media;
+  submitter_email: string;
+  submitter_name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
