@@ -5,7 +5,7 @@ import FilterMenu from '.';
 import Button from '../Forms/Button';
 import { useFilterMenu } from './useFilterMenu';
 import { FilterIcon } from '../Icons';
-import { useMediaQuery } from '@uidotdev/usehooks';
+import { useMediaQuery } from 'usehooks-ts';
 
 export const FilterMenuModal = () => {
   const [isOpen, setIsOpen] = useState(false);
