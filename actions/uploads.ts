@@ -1,11 +1,7 @@
 'use server';
 
-export const uploadImage = async (file: File) => {
+export const uploadImage = async (formData: FormData) => {
   try {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('_payload', JSON.stringify({ alt: file.name }));
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/media?depth=0&fallback-locale=null`,
       {

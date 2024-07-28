@@ -21,6 +21,7 @@ import LogoPicker from '../Forms/LogoPicker';
 import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
 import { uploadImage } from '@/actions/uploads';
+import { getPayloadUploadFormData } from '@/lib/utils';
 
 enum Step {
   Personal = 'personal',
@@ -89,7 +90,8 @@ const SubmitCommunityForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
-      const { id: logo } = await uploadImage(communityLogo as File);
+      const logoFormdata = getPayloadUploadFormData(communityLogo as File);
+      const { id: logo } = await uploadImage(logoFormdata);
       await submitCommunity({ ...data, logo: logo });
       handleOpenSuccessModal();
     } catch (e) {

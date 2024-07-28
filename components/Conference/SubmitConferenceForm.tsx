@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
 import { FormDatePicker } from '../Forms/FormDatePicker';
 import { uploadImage } from '@/actions/uploads';
+import { getPayloadUploadFormData } from '@/lib/utils';
 
 interface SubmitConferenceFormProps {}
 
@@ -39,8 +40,8 @@ const defaultValues = {
   website: '',
   region: '',
   location: '',
-  // start_date: ,
-  // end_date: '',
+  start_date: undefined,
+  end_date: undefined,
   platforms: [],
   pictures: [],
   tool: '',
@@ -101,9 +102,10 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
     try {
       setIsLoading(true);
 
-      const { id: logo } = await uploadImage(conferenceLogo as File);
+      const logoFormdata = getPayloadUploadFormData(conferenceLogo as File);
+      const { id: logo } = await uploadImage(logoFormdata);
       const picturePromises = conferencePictures.map(async (file) =>
-        uploadImage(file as File)
+        uploadImage(getPayloadUploadFormData(file as File))
       );
       const pictureResponses = await Promise.all(picturePromises);
       const pictures = pictureResponses.map((response) => response.id);
