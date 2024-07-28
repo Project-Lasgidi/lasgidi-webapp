@@ -3,7 +3,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities';
 import configPromise from '@payload-config';
 import { ISubmitCommunityRequest } from '@/lib/submitSchema';
 import { Community } from '@/payload-types';
-import { BrowseTabEnum, IQueryParams } from '@/types';
+import { IQueryParams } from '@/types';
 import { Where } from 'payload';
 
 export const fetchCommunities = async ({
@@ -12,7 +12,7 @@ export const fetchCommunities = async ({
   searchParams = {},
 }: IQueryParams) => {
   const payload = await getPayloadHMR({ config: configPromise });
-  const { q, languages, regions, tab, tools } = searchParams;
+  const { q, languages, regions, tools } = searchParams;
 
   const query: Where = {};
 
@@ -22,14 +22,12 @@ export const fetchCommunities = async ({
     }
   };
 
-  if (tab === BrowseTabEnum.COMMUNITY) {
-    if (q) {
-      query.or = [{ name: { contains: q } }, { description: { contains: q } }];
-    }
-    addQueryCondition('language', languages);
-    addQueryCondition('region', regions);
-    addQueryCondition('tool', tools);
+  if (q) {
+    query.or = [{ name: { contains: q } }, { description: { contains: q } }];
   }
+  addQueryCondition('language', languages);
+  addQueryCondition('region', regions);
+  addQueryCondition('tool', tools);
 
   const {
     docs: communities,

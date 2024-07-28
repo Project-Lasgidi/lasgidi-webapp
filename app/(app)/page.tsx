@@ -14,6 +14,11 @@ type Props = {
 };
 
 export default async function Page({ searchParams }: Props) {
+  const isConferenceTab = searchParams?.tab === BrowseTabEnum.CONFERENCE;
+  const isCommnunityOrNoTab =
+    searchParams?.tab === BrowseTabEnum.COMMUNITY ||
+    searchParams?.tab === undefined;
+
   return (
     <div id='homepage' className='min-h-screen py-10 lg:py-20'>
       <NavBar />
@@ -25,12 +30,12 @@ export default async function Page({ searchParams }: Props) {
       <div className='app-container flex flex-col md:mt-14 md:flex-row'>
         <FilterSidebar />
         <ul key={uuid()} role='list' className='flex-1'>
-          {searchParams?.tab === BrowseTabEnum.COMMUNITY && (
+          {isCommnunityOrNoTab && (
             <Suspense fallback={<div>Loading communites...</div>}>
-              <CommunityListDelegate searchParams={searchParams} />
+              <CommunityListDelegate searchParams={searchParams!} />
             </Suspense>
           )}
-          {searchParams?.tab === BrowseTabEnum.CONFERENCE && (
+          {isConferenceTab && (
             <Suspense fallback={<div>Loading conferences...</div>}>
               <ConferenceListDelegate searchParams={searchParams} />
             </Suspense>

@@ -3,7 +3,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities';
 import configPromise from '@payload-config';
 import { ISubmitConferenceRequest } from '@/lib/submitSchema';
 import { Where } from 'payload';
-import { BrowseTabEnum, IQueryParams } from '@/types';
+import { IQueryParams } from '@/types';
 import { Conference } from '@/payload-types';
 
 export const fetchConferences = async ({
@@ -12,7 +12,7 @@ export const fetchConferences = async ({
   searchParams = {},
 }: IQueryParams) => {
   const payload = await getPayloadHMR({ config: configPromise });
-  const { q = '', languages, regions, tab, tools } = searchParams;
+  const { q, languages, regions, tools } = searchParams;
 
   const query: Where = {};
 
@@ -22,14 +22,12 @@ export const fetchConferences = async ({
     }
   };
 
-  if (tab === BrowseTabEnum.CONFERENCE) {
-    if (q) {
-      query.or = [{ name: { contains: q } }, { description: { contains: q } }];
-    }
-    addQueryCondition('language', languages);
-    addQueryCondition('region', regions);
-    addQueryCondition('tool', tools);
+  if (q) {
+    query.or = [{ name: { contains: q } }, { description: { contains: q } }];
   }
+  addQueryCondition('language', languages);
+  addQueryCondition('region', regions);
+  addQueryCondition('tool', tools);
 
   const {
     docs: conferences,
