@@ -29,5 +29,5 @@ const tools = [
   'Canva',
   'Blender',
   'AutoCAD',
-];
+] as const;
 export default tools;

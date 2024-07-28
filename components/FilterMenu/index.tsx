@@ -1,13 +1,13 @@
 'use client';
 import React from 'react';
-import FilterMenuItem from './FilterMenuItem';
+import { FilterMenuItem } from './FilterMenuItem';
 import { useFilterMenu } from './useFilterMenu';
 
 const FilterMenu = () => {
   const { menuCategories, handleMenuItemCheck } = useFilterMenu();
 
   return (
-    <div className='px-4 lg:px-0'>
+    <div className='px-4 lg:px-0 md:w-[204px]'>
       {menuCategories.map((item) => (
         <FilterMenuItem
           key={item.title}

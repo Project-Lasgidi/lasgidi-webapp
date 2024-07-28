@@ -1,15 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { ICommunity, IPagination, ISearchParams } from '@/types';
-import { fetchCommunities } from '@/actions/community';
+import { IPagination, ISearchParams } from '@/types';
 import { LoadingIcon } from '@/components/Icons';
 import { CommunityCard } from './CommunityCard';
+import { Community } from '@/payload-types';
+import { fetchCommunities } from '@/actions/community';
 
 interface ICommunityList {
   searchParams: ISearchParams;
-  initialCommunities: ICommunity[];
+  initialCommunities: Community[];
   initialPagination: IPagination;
 }
 
@@ -19,32 +20,28 @@ export const CommunityList = ({
   initialPagination,
 }: ICommunityList) => {
   const [communities, setCommunities] =
-    useState<ICommunity[]>(initialCommunities);
+    useState<Community[]>(initialCommunities);
   const [pagination, setPagination] = useState<IPagination>(initialPagination);
   const [loaderRef, loaderInView] = useInView();
+  const { hasNextPage, nextPage } = pagination;
 
-  const { page, pageSize, total } = pagination;
-  const hasMore = page * pageSize < total;
+  const loadMoreCommunities = async () => {
+    if (!hasNextPage) return;
 
-  const loadMoreCommunities = useCallback(async () => {
-    if (!hasMore) return;
-    const nextPage = page + 1;
     const response = await fetchCommunities({
       page: nextPage,
-      pageSize,
       searchParams,
     });
-    if (response.communities?.length) {
-      setPagination(response.pagination);
-      setCommunities((prev) => [...prev, ...response.communities]);
-    }
-  }, []);
+    setPagination(response.pagination);
+    setCommunities((prev) => [...prev, ...response.communities]);
+  };
 
   useEffect(() => {
     if (loaderInView) {
       loadMoreCommunities();
     }
-  }, [loaderInView, loadMoreCommunities]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaderInView]);
 
   return (
     <>
@@ -54,17 +51,10 @@ export const CommunityList = ({
         </div>
       )}
       <div className='flex w-full flex-col'>
-        {communities.map((community: ICommunity) => (
-          <CommunityCard
-            logo={community.logo}
-            key={community.id}
-            name={community.name}
-            description={community.description}
-            programs={community.platforms}
-            website={community.website}
-          />
+        {communities.map((community: Community, indec) => (
+          <CommunityCard key={community.id} community={community} />
         ))}
-        {hasMore && (
+        {hasNextPage && (
           <div
             ref={loaderRef}
             className='mt-12 flex w-full items-center justify-center gap-2'

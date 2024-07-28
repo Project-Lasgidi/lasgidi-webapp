@@ -10,9 +10,9 @@ const transformMenuCaterogy = (title: string, data: string[]) => ({
 });
 
 const initialCategories = [
-  transformMenuCaterogy('Regions', regions),
-  transformMenuCaterogy('Languages', programmingLanguages),
-  transformMenuCaterogy('Tools', tools),
+  transformMenuCaterogy('Regions', [...regions]),
+  transformMenuCaterogy('Languages', [...programmingLanguages]),
+  transformMenuCaterogy('Tools', [...tools]),
 ];
 
 interface IMenuCategory {

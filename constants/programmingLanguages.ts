@@ -13,5 +13,5 @@ const programmingLanguages = [
   'Kotlin',
   'Rust',
   'Scala',
-];
+] as const;
 export default programmingLanguages;

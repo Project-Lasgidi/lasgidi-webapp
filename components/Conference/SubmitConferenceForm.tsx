@@ -8,7 +8,6 @@ import {
   ISubmitConferenceRequest,
   submitConferenceSchema,
 } from '@/lib/submitSchema';
-import { uploadImages } from '@/actions/community';
 import { submitConference } from '@/actions/conference';
 import FormInput from '@/components/Forms/FormInput';
 import Button from '@/components/Forms/Button';
@@ -23,6 +22,7 @@ import { ImagesPicker } from '../Forms/ImagesPicker';
 import { toast } from 'react-toastify';
 import { SubmitSuccessModal } from '../SubmitSuccessModal';
 import { FormDatePicker } from '../Forms/FormDatePicker';
+import { uploadImage } from '@/actions/uploads';
 
 interface SubmitConferenceFormProps {}
 
@@ -101,18 +101,12 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
     try {
       setIsLoading(true);
 
-      const logoFormData = new FormData();
-      logoFormData.append('files', conferenceLogo as File);
-      const logoResponse = await uploadImages(logoFormData);
-      const logo = logoResponse.data[0].id;
-
-      const picturesFormData = new FormData();
-      conferencePictures.forEach((file) => {
-        picturesFormData.append('files', file as File);
-      });
-      const imagesResponse = await uploadImages(picturesFormData);
-      const pictures = imagesResponse.data.map((image: any) => image.id);
-
+      const { id: logo } = await uploadImage(conferenceLogo as File);
+      const picturePromises = conferencePictures.map(async (file) =>
+        uploadImage(file as File)
+      );
+      const pictureResponses = await Promise.all(picturePromises);
+      const pictures = pictureResponses.map((response) => response.id);
       await submitConference({ ...data, logo, pictures });
       handleOpenSuccessModal();
     } catch (e) {
@@ -258,7 +252,7 @@ const SubmitConferenceForm = ({}: SubmitConferenceFormProps) => {
                       control={control}
                       render={({ field }) => (
                         <FormDatePicker
-                          minDate={startDate ? new Date(startDate) : null}
+                          minDate={startDate ? new Date(startDate) : undefined}
                           placeholder='End Date'
                           error={errors.end_date?.message}
                           {...field}

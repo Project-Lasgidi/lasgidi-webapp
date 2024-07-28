@@ -1,4 +1,5 @@
-import { BrowseTab } from '@/types';
+'use client';
+import { BrowseTabEnum } from '@/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 
@@ -8,10 +9,10 @@ export const useActiveTab = () => {
   const router = useRouter();
 
   const activeTab = (searchParams.get('tab')?.toString() ||
-    BrowseTab.COMMUNITY) as BrowseTab;
+    BrowseTabEnum.COMMUNITY) as BrowseTabEnum;
 
   const handleActiveTab = useCallback(
-    (tab: BrowseTab) => {
+    (tab: BrowseTabEnum) => {
       const params = new URLSearchParams(searchParams);
       params.set('tab', tab);
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
@@ -20,10 +21,10 @@ export const useActiveTab = () => {
   );
 
   useEffect(() => {
-    if (activeTab === BrowseTab.COMMUNITY) {
-      handleActiveTab(BrowseTab.COMMUNITY);
+    if (activeTab === BrowseTabEnum.COMMUNITY) {
+      handleActiveTab(BrowseTabEnum.COMMUNITY);
     } else {
-      handleActiveTab(BrowseTab.CONFERENCE);
+      handleActiveTab(BrowseTabEnum.CONFERENCE);
     }
   }, [activeTab, handleActiveTab]);
 

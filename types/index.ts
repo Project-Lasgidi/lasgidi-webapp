@@ -8,15 +8,15 @@ export type PropsWithOptionalChildren<P = unknown> = P & {
 
 export interface ISearchParams {
   q?: string;
-  tab?: BrowseTab;
+  tab?: BrowseTabEnum;
   tools?: string;
   languages?: string;
   regions?: string;
 }
 
 export type IQueryParams = {
+  limit?: number;
   page?: number;
-  pageSize?: number;
   searchParams?: ISearchParams;
 };
 
@@ -30,10 +30,8 @@ export type ICommunity = {
 };
 
 export type IPagination = {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
+  nextPage?: number;
+  hasNextPage: boolean;
 };
 
 export interface IConference {
@@ -60,7 +58,7 @@ export interface IImageUrl {
   height: number;
 }
 
-export enum BrowseTab {
+export enum BrowseTabEnum {
   COMMUNITY = 'community',
   CONFERENCE = 'conference',
 }

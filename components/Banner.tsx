@@ -4,12 +4,9 @@ import { CaretIcon } from '@/components/Icons';
 import { SubmitOptionsModal } from './SubmitOptionsModal';
 import { useToggle } from 'usehooks-ts';
 import Button from './Forms/Button';
-import { useSubmitButton } from '@/hooks/useSubmitButton';
 import Link from 'next/link';
 
-const Banner = () => {
-  const { handleSubmitMouseEnter, handleSubmitMouseLeave, submitStroke } =
-    useSubmitButton();
+export const Banner = () => {
   const [openSubmitModal, _, setValue] = useToggle();
 
   const handleCloseSuccessModal = () => {
@@ -26,7 +23,7 @@ const Banner = () => {
         onClose={handleCloseSuccessModal}
       />
       <section className='flex flex-col items-center gap-6 bg-hero-image bg-cover bg-no-repeat pb-16 pt-20 md:pb-28 md:pt-24'>
-        <div className='flex flex-col items-center  gap-4'>
+        <div className='flex flex-col items-center gap-4'>
           <p className='text-center text-6xl font-bold text-black'>
             The Lasgidi Project
           </p>
@@ -35,13 +32,9 @@ const Banner = () => {
           </p>
         </div>
         <div className='grid place-items-center gap-6'>
-          <Button
-            onClick={handleOpenSuccessModal}
-            onMouseEnter={handleSubmitMouseEnter}
-            onMouseLeave={handleSubmitMouseLeave}
-          >
+          <Button onClick={handleOpenSuccessModal}>
             Submit
-            <CaretIcon stroke={submitStroke} />
+            <CaretIcon />
           </Button>
           <p className='text-base font-normal text-black'>
             <span>Or </span>
@@ -54,5 +47,3 @@ const Banner = () => {
     </>
   );
 };
-
-export default Banner;

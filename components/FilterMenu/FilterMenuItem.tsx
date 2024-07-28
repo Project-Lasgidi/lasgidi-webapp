@@ -1,5 +1,12 @@
 import React from 'react';
-import { Disclosure, Switch } from '@headlessui/react';
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Field,
+  Label,
+  Switch,
+} from '@headlessui/react';
 import { CaretIcon, CheckedIcon, UncheckedIcon } from '@/components/Icons';
 import classNames from '@/lib/classNames';
 
@@ -9,7 +16,7 @@ interface IFilterMenuItem {
   onChecked: (checked: boolean, title: string, label: string) => void;
 }
 
-const FilterMenuItem = ({
+export const FilterMenuItem = ({
   title,
   subMenus = [],
   onChecked,
@@ -18,7 +25,7 @@ const FilterMenuItem = ({
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button as='div' className='mt-2 w-full'>
+          <DisclosureButton as='div' className='mt-2 w-full'>
             <div className='flex cursor-pointer items-center justify-between'>
               <p className='text-base font-bold leading-relaxed text-black'>
                 {title}
@@ -33,10 +40,10 @@ const FilterMenuItem = ({
                 />
               )}
             </div>
-          </Disclosure.Button>
-          <Disclosure.Panel>
+          </DisclosureButton>
+          <DisclosurePanel>
             {subMenus.map(({ checked, label }) => (
-              <Switch.Group key={label}>
+              <Field key={label}>
                 <div className='mt-2 flex cursor-pointer items-center gap-2 pr-2'>
                   <Switch
                     checked={checked}
@@ -45,15 +52,13 @@ const FilterMenuItem = ({
                   >
                     {checked ? <CheckedIcon /> : <UncheckedIcon />}
                   </Switch>
-                  <Switch.Label>{label}</Switch.Label>
+                  <Label>{label}</Label>
                 </div>
-              </Switch.Group>
+              </Field>
             ))}
-          </Disclosure.Panel>
+          </DisclosurePanel>
         </>
       )}
     </Disclosure>
   );
 };
-
-export default FilterMenuItem;

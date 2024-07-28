@@ -6,7 +6,7 @@ import classNames from '@/lib/classNames';
 
 const DEBOUNCE_TIME = 300;
 
-const SearchBar = () => {
+export const SearchBar = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -22,7 +22,7 @@ const SearchBar = () => {
   }, DEBOUNCE_TIME);
 
   return (
-    <div className='flex h-10 w-full items-center  justify-start gap-1 border-b border-neutral-100 pb-3 md:w-96'>
+    <div className='flex h-10 w-full items-center justify-start gap-1 border-b border-neutral-100 pb-3 md:w-96'>
       <SearchIcon className='pointer-events-none' />
       <input
         className={classNames(
@@ -39,5 +39,3 @@ const SearchBar = () => {
     </div>
   );
 };
-
-export default SearchBar;

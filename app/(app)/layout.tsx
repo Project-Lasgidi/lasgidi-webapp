@@ -4,30 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, Zoom } from 'react-toastify';
 import { PropsWithChildren } from '@/types';
-import localFont from 'next/font/local';
 import { Metadata } from 'next';
 import { projectInfo } from '@/constants/projectInfo';
-
-const sfPro = localFont({
-  variable: '--font-sf-pro-display',
-  src: [
-    {
-      path: '../public/fonts/sf-pro-display_regular.woff2',
-      // weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/sf-pro-display_medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/sf-pro-display_semibold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-  ],
-});
+import { sfPro } from '@/config/fonts';
 
 const { appUrl, description, keywords, projectTitle } = projectInfo;
 export const metadata: Metadata = {
@@ -69,7 +48,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en' className={`${sfPro.variable} font-customFont`}>
-      {/* <CustomHead /> */}
       <body>
         <main>{children}</main>
         <ToastContainer

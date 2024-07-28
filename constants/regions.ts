@@ -7,6 +7,6 @@ const regions = [
   'North America',
   'Pacific',
   'South America',
-];
+] as const;
 
 export default regions;
