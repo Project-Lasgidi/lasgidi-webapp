@@ -56,17 +56,27 @@ export const submitConference = async (
   conference: ISubmitConferenceRequest
 ) => {
   const payload = await getPayloadHMR({ config: configPromise });
+  const {
+    region,
+    tool,
+    language,
+    logo,
+    start_date,
+    end_date,
+    pictures,
+    ...rest
+  } = conference;
   await payload.create({
     collection: 'conferences',
     data: {
-      ...conference,
-      region: conference.region as Conference['region'],
-      tool: conference.tool as Conference['tool'],
-      language: conference.language as Conference['language'],
-      logo: conference.logo as string,
-      start_date: conference.start_date.toISOString(),
-      end_date: conference.end_date.toISOString(),
-      pictures: conference.pictures.map((id) => ({
+      ...rest,
+      region: region ? (region as Conference['region']) : null,
+      tool: tool ? (tool as Conference['tool']) : null,
+      language: language ? (language as Conference['language']) : null,
+      logo: logo as string,
+      start_date: start_date.toISOString(),
+      end_date: end_date.toISOString(),
+      pictures: pictures.map((id) => ({
         picture: id as string,
       })),
     },

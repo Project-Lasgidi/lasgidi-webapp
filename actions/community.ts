@@ -54,14 +54,15 @@ export const fetchCommunities = async ({
 
 export const submitCommunity = async (community: ISubmitCommunityRequest) => {
   const payload = await getPayloadHMR({ config: configPromise });
+  const { region, tool, language, logo, ...rest } = community;
   await payload.create({
     collection: 'communities',
     data: {
-      ...community,
-      region: community.region as Community['region'],
-      tool: community.tool as Community['tool'],
-      language: community.language as Community['language'],
-      logo: community.logo as string,
+      ...rest,
+      region: region ? (region as Community['region']) : null,
+      tool: tool ? (tool as Community['tool']) : null,
+      language: language ? (language as Community['language']) : null,
+      logo: logo as string,
     },
   });
 };
