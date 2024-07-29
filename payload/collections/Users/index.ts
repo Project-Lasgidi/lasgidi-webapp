@@ -1,3 +1,4 @@
+import { isAdmin } from '@/payload/access/admin';
 import { authenticated } from '@/payload/access/authenticated';
 import type { CollectionConfig } from 'payload';
 

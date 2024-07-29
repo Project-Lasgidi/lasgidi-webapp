@@ -1,6 +1,8 @@
 import regions from '@/constants/regions';
 import tools from '@/constants/tools';
+import { isAdmin } from '@/payload/access/admin';
 import { authenticated } from '@/payload/access/authenticated';
+import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished';
 import { CollectionConfig } from 'payload';
 
 export const ConferencesCollection: CollectionConfig = {
@@ -11,9 +13,9 @@ export const ConferencesCollection: CollectionConfig = {
   access: {
     admin: authenticated,
     create: authenticated,
-    delete: authenticated,
-    read: authenticated,
-    update: authenticated,
+    delete: isAdmin,
+    read: authenticatedOrPublished,
+    update: isAdmin,
   },
   fields: [
     {
@@ -115,4 +117,7 @@ export const ConferencesCollection: CollectionConfig = {
     },
   ],
   timestamps: true,
+  versions: {
+    drafts: true,
+  },
 };
