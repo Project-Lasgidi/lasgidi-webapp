@@ -14,7 +14,11 @@ export const fetchCommunities = async ({
   const payload = await getPayloadHMR({ config: configPromise });
   const { q, languages, regions, tools } = searchParams;
 
-  const query: Where = {};
+  const query: Where = {
+    _status: {
+      equals: 'published',
+    },
+  };
 
   const addQueryCondition = (field: string, value?: string) => {
     if (value) {
