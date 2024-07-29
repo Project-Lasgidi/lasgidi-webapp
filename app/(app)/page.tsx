@@ -3,7 +3,10 @@ import { BrowseTabEnum, ISearchParams } from '@/types';
 import { Banner } from '@/components/Banner';
 import { v4 as uuid } from 'uuid';
 import { Suspense } from 'react';
-import { UpcomingConferences } from '@/components/Conference/UpcomingConferences';
+import {
+  UpcomingConferences,
+  UpcomingConferencesLoader,
+} from '@/components/Conference/UpcomingConferences';
 import { CommunityListDelegate } from '@/components/Community/CommunityListDelegate';
 import { ConferenceListDelegate } from '@/components/Conference/ConferenceListDelegate';
 import { FilterSidebar } from '@/components/FilterSidebar';
@@ -23,7 +26,7 @@ export default async function Page({ searchParams }: Props) {
     <div id='homepage' className='min-h-screen py-10 lg:py-20'>
       <NavBar />
       <Banner />
-      <Suspense fallback={<div>Loading carousel...</div>}>
+      <Suspense fallback={<UpcomingConferencesLoader />}>
         <UpcomingConferences />
       </Suspense>
       <BrowseControls />
